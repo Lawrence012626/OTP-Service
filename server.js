@@ -10,9 +10,6 @@ app.use(bodyParser.json());
 
 // Gmail transporter (with App Password) - Updated to use env variables
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: process.env.SMTP_SECURE === 'true', // false for 587, true for 465
   auth: {
     user: process.env.SMTP_USER, // Gmail address
     pass: process.env.SMTP_PASS, // Gmail App Password
