@@ -8,12 +8,14 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
-// Gmail transporter (with App Password)
-const transporter = nodemailer.createTransport({
-  service: "gmail",
+// SMTP transporter using env variables
+const transporter = nodemailer.createTransporter({
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: process.env.SMTP_SECURE === 'true', // false for 587, true for 465
   auth: {
-    user: process.env.EMAIL_USER, // Gmail address
-    pass: process.env.EMAIL_PASS, // Gmail App Password
+    user: process.env.SMTP_USER, // capstonetrivoca@gmail.com
+    pass: process.env.SMTP_PASS, // phzi oklo coqz rjcv
   },
 });
 
@@ -31,31 +33,23 @@ app.post("/send-otp", async (req, res) => {
 
     // Email options
     const mailOptions = {
-      from: `"TriVoca" <${process.env.EMAIL_USER}>`, // Set sender name explicitly
+      from: `"TriVoca" <${process.env.SMTP_USER}>`, // Using SMTP_USER instead
       to: email,
       subject: "Your One-Time Password (OTP) Code",
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border-radius: 10px; background: #f9f9f9; border: 1px solid #ddd;">
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
           <h2 style="text-align: center; color: #333;">TriVoca</h2>
-          <p style="font-size: 15px; color: #555;">
-            Dear User,
-          </p>
-          <p style="font-size: 15px; color: #555;">
-            You requested a one-time password (OTP) to verify your account. Please use the code below:
-          </p>
-          <div style="text-align: center; margin: 30px 0;">
-            <span style="font-size: 32px; font-weight: bold; color: #1E4D9B; letter-spacing: 4px;">
-              ${otp}
-            </span>
+          <div style="text-align: center; margin: 20px 0;">
+            <p>Dear User,</p>
+            <p>You requested a one-time password (OTP) to verify your account. Please use the code below:</p>
+            <div style="background-color: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 5px; text-align: center;">
+              <h1 style="color: #4285f4; font-size: 32px; margin: 0;">${otp}</h1>
+            </div>
+            <p>This OTP is valid for <strong>5 minutes</strong>. Do not share this code with anyone.</p>
+            <p>If you didn't request this, please ignore this email or contact our support team.</p>
           </div>
-          <p style="font-size: 14px; color: #555;">
-            This OTP is valid for <strong>5 minutes</strong>. Do not share this code with anyone.
-          </p>
-          <p style="font-size: 14px; color: #555;">
-            If you didn't request this, please ignore this email or contact our support team.
-          </p>
-          <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;" />
-          <p style="font-size: 12px; color: #888; text-align: center;">
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+          <p style="text-align: center; color: #666; font-size: 12px;">
             © ${new Date().getFullYear()} TriVoca. All rights reserved.
           </p>
         </div>
