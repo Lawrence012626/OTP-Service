@@ -33,7 +33,7 @@ app.post("/send-otp", async (req, res) => {
 
     // Email options
     const mailOptions = {
-  from: process.env.EMAIL_USER,
+  from: process.env.SMTP_USER,
   to: email,
   subject: "Your One-Time Password (OTP) Code",
   html: `
