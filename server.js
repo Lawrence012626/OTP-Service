@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Gmail transporter (with App Password) - FIXED VERSION
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   service: 'gmail', // Add this line to specify Gmail service
   host: 'smtp.gmail.com',
   port: 587,
