@@ -8,11 +8,15 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
-// Gmail transporter (with App Password) - Updated to use env variables
-const transporter = nodemailer.createTransport({
+// Gmail transporter (with App Password) - FIXED VERSION
+const transporter = nodemailer.createTransporter({
+  service: 'gmail', // Add this line to specify Gmail service
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
   auth: {
-    user: process.env.SMTP_USER, // Gmail address
-    pass: process.env.SMTP_PASS, // Gmail App Password
+    user: process.env.SMTP_USER, 
+    pass: process.env.SMTP_PASS, 
   },
 });
 
@@ -28,45 +32,49 @@ app.post("/send-otp", async (req, res) => {
     // Generate 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000);
 
-    // Email options
+    // Email options - FIXED VERSION with proper sender name
     const mailOptions = {
-  from: process.env.SMTP_USER,
-  to: email,
-  subject: "Your One-Time Password (OTP) Code",
-  html: `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border-radius: 10px; background: #f9f9f9; border: 1px solid #ddd;">
-      <h2 style="text-align: center; color: #333;">Trivoca</h2>
-      <p style="font-size: 15px; color: #555;">
-        Dear User,
-      </p>
-      <p style="font-size: 15px; color: #555;">
-        You requested a one-time password (OTP) to verify your account. Please use the code below:
-      </p>
-      <div style="text-align: center; margin: 30px 0;">
-        <span style="font-size: 32px; font-weight: bold; color: #1E4D9B; letter-spacing: 4px;">
-          ${otp}
-        </span>
-      </div>
-      <p style="font-size: 14px; color: #555;">
-        This OTP is valid for <strong>5 minutes</strong>. Do not share this code with anyone.
-      </p>
-      <p style="font-size: 14px; color: #555;">
-        If you didn’t request this, please ignore this email or contact our support team.
-      </p>
-      <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;" />
-      <p style="font-size: 12px; color: #888; text-align: center;">
-        © ${new Date().getFullYear()} Trivoca. All rights reserved.
-      </p>
-    </div>
-  `,
-};
+      from: `"Trivoca" <${process.env.SMTP_USER}>`, // This ensures sender name shows as "Trivoca"
+      to: email,
+      subject: "Your One-Time Password (OTP) Code",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border-radius: 10px; background: #f9f9f9; border: 1px solid #ddd;">
+          <h2 style="text-align: center; color: #333;">Trivoca</h2>
+          <p style="font-size: 15px; color: #555;">
+            Dear User,
+          </p>
+          <p style="font-size: 15px; color: #555;">
+            You requested a one-time password (OTP) to verify your account. Please use the code below:
+          </p>
+          <div style="text-align: center; margin: 30px 0;">
+            <span style="font-size: 32px; font-weight: bold; color: #1E4D9B; letter-spacing: 4px;">
+              ${otp}
+            </span>
+          </div>
+          <p style="font-size: 14px; color: #555;">
+            This OTP is valid for <strong>5 minutes</strong>. Do not share this code with anyone.
+          </p>
+          <p style="font-size: 14px; color: #555;">
+            If you didn't request this, please ignore this email or contact our support team.
+          </p>
+          <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;" />
+          <p style="font-size: 12px; color: #888; text-align: center;">
+            © ${new Date().getFullYear()} Trivoca. All rights reserved.
+          </p>
+        </div>
+      `,
+    };
 
     // Send email
     await transporter.sendMail(mailOptions);
 
-    res.json({ success: true, otp }); // ⚠️ in production, wag i-send OTP pabalik
+    res.json({ 
+      success: true, 
+      message: "OTP sent successfully",
+      // otp // ⚠️ Remove this in production - don't send OTP back to client
+    }); 
   } catch (error) {
-    console.error(error);
+    console.error("Email sending error:", error);
     res.status(500).json({ error: "Failed to send OTP" });
   }
 });
