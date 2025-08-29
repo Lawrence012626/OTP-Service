@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 const otpStore = new Map();
 
 // Gmail transporter (with App Password)
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
   port: 587,
