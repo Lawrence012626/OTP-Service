@@ -8,9 +8,12 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
-// Gmail transporter (with App Password) - FIXED VERSION
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // Add this line to specify Gmail service
+// In-memory OTP storage (use Redis or database in production)
+const otpStore = new Map();
+
+// Gmail transporter (with App Password)
+const transporter = nodemailer.createTransporter({
+  service: 'gmail',
   host: 'smtp.gmail.com',
   port: 587,
   secure: false,
@@ -30,11 +33,21 @@ app.post("/send-otp", async (req, res) => {
     }
 
     // Generate 6-digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // Email options - FIXED VERSION with proper sender name
+    // Store OTP with expiration (5 minutes)
+    const expiresAt = Date.now() + 5 * 60 * 1000; // 5 minutes from now
+    otpStore.set(email.toLowerCase(), {
+      otp: otp,
+      expiresAt: expiresAt,
+      attempts: 0
+    });
+
+    console.log(`OTP for ${email}: ${otp}`); // For debugging - remove in production
+
+    // Email options
     const mailOptions = {
-      from: `"Trivoca" <${process.env.SMTP_USER}>`, // This ensures sender name shows as "Trivoca"
+      from: `"Trivoca" <${process.env.SMTP_USER}>`,
       to: email,
       subject: "Your One-Time Password (OTP) Code",
       html: `
@@ -70,16 +83,109 @@ app.post("/send-otp", async (req, res) => {
 
     res.json({ 
       success: true, 
-      message: "OTP sent successfully",
-      // otp // ⚠️ Remove this in production - don't send OTP back to client
+      message: "OTP sent successfully"
     }); 
   } catch (error) {
     console.error("Email sending error:", error);
-    res.status(500).json({ error: "Failed to send OTP" });
+    res.status(500).json({ 
+      success: false,
+      error: "Failed to send OTP" 
+    });
   }
 });
+
+// API route to verify OTP
+app.post("/verify-otp", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Email and OTP are required" 
+      });
+    }
+
+    const emailKey = email.toLowerCase();
+    const storedData = otpStore.get(emailKey);
+
+    if (!storedData) {
+      return res.status(400).json({ 
+        success: false,
+        message: "OTP not found. Please request a new OTP." 
+      });
+    }
+
+    // Check if OTP has expired
+    if (Date.now() > storedData.expiresAt) {
+      otpStore.delete(emailKey);
+      return res.status(400).json({ 
+        success: false,
+        message: "OTP has expired. Please request a new OTP." 
+      });
+    }
+
+    // Check attempt limit (max 3 attempts)
+    if (storedData.attempts >= 3) {
+      otpStore.delete(emailKey);
+      return res.status(400).json({ 
+        success: false,
+        message: "Too many failed attempts. Please request a new OTP." 
+      });
+    }
+
+    // Verify OTP
+    if (storedData.otp !== otp.toString()) {
+      storedData.attempts += 1;
+      otpStore.set(emailKey, storedData);
+      
+      return res.status(400).json({ 
+        success: false,
+        message: `Invalid OTP. ${3 - storedData.attempts} attempts remaining.` 
+      });
+    }
+
+    // OTP is valid - remove from store and return success
+    otpStore.delete(emailKey);
+    
+    console.log(`OTP verified successfully for ${email}`);
+    
+    res.json({ 
+      success: true,
+      message: "OTP verified successfully" 
+    });
+
+  } catch (error) {
+    console.error("OTP verification error:", error);
+    res.status(500).json({ 
+      success: false,
+      message: "Failed to verify OTP" 
+    });
+  }
+});
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ 
+    status: "OK",
+    message: "OTP service is running",
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Clean up expired OTPs every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [email, data] of otpStore.entries()) {
+    if (now > data.expiresAt) {
+      otpStore.delete(email);
+      console.log(`Cleaned up expired OTP for ${email}`);
+    }
+  }
+}, 5 * 60 * 1000);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📧 SMTP configured for: ${process.env.SMTP_USER}`);
 });
