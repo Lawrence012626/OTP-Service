@@ -51,29 +51,73 @@ app.post("/send-otp", async (req, res) => {
       to: email,
       subject: "Your One-Time Password (OTP) Code",
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border-radius: 10px; background: #f9f9f9; border: 1px solid #ddd;">
-          <h2 style="text-align: center; color: #333;">Trivoca</h2>
-          <p style="font-size: 15px; color: #555;">
-            Dear User,
-          </p>
-          <p style="font-size: 15px; color: #555;">
-            You requested a one-time password (OTP) to verify your account. Please use the code below:
-          </p>
-          <div style="text-align: center; margin: 30px 0;">
-            <span style="font-size: 32px; font-weight: bold; color: #1E4D9B; letter-spacing: 4px;">
-              ${otp}
-            </span>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 50%, #0451c4 100%); border-radius: 20px; overflow: hidden;">
+          <!-- Header Section -->
+          <div style="text-align: center; padding: 40px 20px 30px; background: rgba(255, 255, 255, 0.1);">
+            <div style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: #FEF1C7; border-radius: 50%; margin-bottom: 20px;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(45deg, #4F46E5, #3B82F6); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white; font-weight: bold; font-size: 18px;">T</span>
+              </div>
+            </div>
+            <h1 style="color: #FEF1C7; font-size: 42px; font-weight: bold; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">TriVoca</h1>
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 16px; margin: 8px 0 0; font-weight: 500;">Language Exam Simulation and Speech Practice</p>
           </div>
-          <p style="font-size: 14px; color: #555;">
-            This OTP is valid for <strong>5 minutes</strong>. Do not share this code with anyone.
-          </p>
-          <p style="font-size: 14px; color: #555;">
-            If you didn't request this, please ignore this email or contact our support team.
-          </p>
-          <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;" />
-          <p style="font-size: 12px; color: #888; text-align: center;">
-            © ${new Date().getFullYear()} Trivoca. All rights reserved.
-          </p>
+
+          <!-- Content Section -->
+          <div style="background: white; padding: 40px 30px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+              <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #4F46E5, #3B82F6); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white; font-size: 24px;">✉️</span>
+              </div>
+              <h2 style="color: #1F2937; font-size: 28px; font-weight: bold; margin: 0 0 10px;">Verify Your Email</h2>
+              <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
+                Please use the verification code below to complete your registration
+              </p>
+            </div>
+
+            <!-- OTP Code Section -->
+            <div style="text-align: center; margin: 40px 0;">
+              <div style="background: linear-gradient(135deg, #F3F4F6, #E5E7EB); border-radius: 16px; padding: 30px; margin: 0 auto; display: inline-block; border: 2px dashed #D1D5DB;">
+                <p style="color: #6B7280; font-size: 14px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Your Verification Code</p>
+                <span style="font-size: 36px; font-weight: bold; color: #0451c4; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 0 2px 4px rgba(4, 81, 196, 0.2);">
+                  ${otp}
+                </span>
+              </div>
+            </div>
+
+            <!-- Info Section -->
+            <div style="background: #F8FAFC; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #0451c4;">
+              <p style="color: #374151; font-size: 14px; margin: 0 0 8px; font-weight: 600;">⏰ Important Information:</p>
+              <p style="color: #6B7280; font-size: 14px; margin: 0; line-height: 1.6;">
+                This verification code is valid for <strong style="color: #0451c4;">5 minutes</strong>. Do not share this code with anyone for security reasons.
+              </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+              <p style="color: #9CA3AF; font-size: 14px; line-height: 1.6; margin: 0;">
+                If you didn't request this verification code, please ignore this email or contact our support team.
+              </p>
+            </div>
+
+            <!-- Call to Action -->
+            <div style="text-align: center; margin: 30px 0;">
+              <div style="background: linear-gradient(135deg, #4F46E5, #0451c4); color: white; padding: 15px 30px; border-radius: 50px; display: inline-block; font-weight: 600; font-size: 16px;">
+                🚀 Get Started with TriVoca
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Section -->
+          <div style="background: #1F2937; padding: 30px; text-align: center;">
+            <p style="color: #9CA3AF; font-size: 14px; margin: 0 0 10px;">
+              Fluency in Korean, Chinese, and Japanese starts here.
+            </p>
+            <div style="border-top: 1px solid #374151; margin: 20px 0; padding-top: 20px;">
+              <p style="color: #6B7280; font-size: 12px; margin: 0;">
+                © ${new Date().getFullYear()} TriVoca. All rights reserved.
+              </p>
+            </div>
+          </div>
         </div>
       `,
     };
