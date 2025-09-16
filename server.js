@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 const otpStore = new Map();
 
 // Gmail transporter (with App Password)
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
   port: 587,
@@ -45,25 +45,30 @@ app.post("/send-otp", async (req, res) => {
 
     console.log(`OTP for ${email}: ${otp}`); // For debugging - remove in production
 
-    // Email options with updated template
+    // Email options
     const mailOptions = {
-      from: `"Trivoca Entry Level" <${process.env.SMTP_USER}>`,
+      from: `"Trivoca" <${process.env.SMTP_USER}>`,
       to: email,
-      subject: "Your One-Time Password (OTP) Code - Trivoca Entry Level",
+      subject: "Your One-Time Password (OTP) Code",
       attachments: [
         {
           filename: 'logo.png',
           path: './logo.png', // Path to your logo file
           cid: 'logo' // Content ID for embedding in HTML
+        },
+        {
+          filename: 'bubble.jpg',
+          path: './bubble.jpg', // Path to your bubble background
+          cid: 'bubble' // Content ID for embedding in HTML
         }
       ],
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 50%, #0451c4 100%); border-radius: 20px; overflow: hidden;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(59, 130, 246, 0.9) 50%, rgba(4, 81, 196, 0.9) 100%), url('cid:bubble') center/cover; border-radius: 20px; overflow: hidden;">
           <!-- Header Section -->
-          <div style="text-align: center; padding: 40px 20px 30px; background: rgba(255, 255, 255, 0.1);">
-            <!-- Logo/Image placement area -->
+          <div style="text-align: center; padding: 40px 20px 30px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+            <!-- Logo Section -->
             <div style="margin-bottom: 20px;">
-              <img src="cid:logo" alt="Trivoca Entry Level Logo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #FEF1C7;">
+              <img src="cid:logo" alt="Trivoca Entry Level Logo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #FEF1C7; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
             <h1 style="color: #FEF1C7; font-size: 42px; font-weight: bold; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Trivoca Entry Level</h1>
             <p style="color: rgba(255, 255, 255, 0.9); font-size: 16px; margin: 8px 0 0; font-weight: 500;">Language Proficiency Exam Simulator</p>
@@ -91,7 +96,7 @@ app.post("/send-otp", async (req, res) => {
               </div>
             </div>
 
-            <!-- Info Section -->
+            <!-- Important Note Section -->
             <div style="background: #F8FAFC; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #0451c4;">
               <p style="color: #374151; font-size: 14px; margin: 0 0 8px; font-weight: 600;">Important Note</p>
               <p style="color: #6B7280; font-size: 14px; margin: 0; line-height: 1.6;">
@@ -218,7 +223,7 @@ app.post("/verify-otp", async (req, res) => {
 app.get("/health", (req, res) => {
   res.json({ 
     status: "OK",
-    message: "Trivoca Entry Level OTP service is running",
+    message: "OTP service is running",
     timestamp: new Date().toISOString()
   });
 });
@@ -236,6 +241,6 @@ setInterval(() => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Trivoca Entry Level Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📧 SMTP configured for: ${process.env.SMTP_USER}`);
 });
