@@ -58,76 +58,57 @@ app.post("/send-otp", async (req, res) => {
         },
         {
           filename: 'bubble.jpg',
-          path: './bubble.jpg', // Path to your bubble background
-          cid: 'bubble' // Content ID for embedding in HTML
+          path: './bubble.jpg', // Path to your circle decoration
+          cid: 'circle' // Content ID for embedding in HTML
         }
       ],
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(59, 130, 246, 0.9) 50%, rgba(4, 81, 196, 0.9) 100%), url('cid:bubble') center/cover; border-radius: 20px; overflow: hidden;">
-          <!-- Header Section -->
-          <div style="text-align: center; padding: 40px 20px 30px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
-            <!-- Logo Section -->
-            <div style="margin-bottom: 20px;">
-              <img src="cid:logo" alt="Trivoca Entry Level Logo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #FEF1C7; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-            </div>
-            <h1 style="color: #FEF1C7; font-size: 42px; font-weight: bold; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Trivoca Entry Level</h1>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 16px; margin: 8px 0 0; font-weight: 500;">Language Proficiency Exam Simulator</p>
-          </div>
-
-          <!-- Content Section -->
-          <div style="background: white; padding: 40px 30px;">
-            <div style="text-align: center; margin-bottom: 30px;">
-              <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #4F46E5, #3B82F6); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
-                <span style="color: white; font-size: 24px;">✉️</span>
-              </div>
-              <h2 style="color: #1F2937; font-size: 28px; font-weight: bold; margin: 0 0 10px;">Verify Your Email</h2>
-              <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
-                Please use the verification code below to complete your registration.
+        <!-- Import Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+        
+        <div style="position: relative; font-family: 'Poppins', Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; background: #ffffff; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden;">
+          <!-- Circle Decorations -->
+          <img src="cid:circle" alt="circle" style="position: absolute; top: -30px; right: -30px; width: 100px; opacity: 0.8;">
+          <img src="cid:circle" alt="circle" style="position: absolute; bottom: 40px; left: -40px; width: 120px; opacity: 0.8;">
+          
+          <!-- Header (Logo + Text Side by Side) -->
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 25px; position: relative; z-index: 1;">
+            <img src="cid:logo" alt="TriVoca Logo" style="height: 100px;">
+            <div>
+              <h2 style="color: #F59E0B; font-size: 25px; margin: 0; font-weight: 700;">Trivoca Entry Level</h2>
+              <p style="color: #374151; font-size: 13px; margin: 2px 0 0; line-height: 1.4;">
+                Language Proficiency<br>Exam Simulator
               </p>
-            </div>
-
-            <!-- OTP Code Section -->
-            <div style="text-align: center; margin: 40px 0;">
-              <div style="background: linear-gradient(135deg, #F3F4F6, #E5E7EB); border-radius: 16px; padding: 30px; margin: 0 auto; display: inline-block; border: 2px dashed #D1D5DB;">
-                <p style="color: #6B7280; font-size: 14px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Verification Code:</p>
-                <span style="font-size: 36px; font-weight: bold; color: #0451c4; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 0 2px 4px rgba(4, 81, 196, 0.2);">
-                  ${otp}
-                </span>
-              </div>
-            </div>
-
-            <!-- Important Note Section -->
-            <div style="background: #F8FAFC; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #0451c4;">
-              <p style="color: #374151; font-size: 14px; margin: 0 0 8px; font-weight: 600;">Important Note</p>
-              <p style="color: #6B7280; font-size: 14px; margin: 0; line-height: 1.6;">
-                This verification code is valid for <strong style="color: #0451c4;">5 Minutes</strong>. Do not share this code with anyone for security reasons.
-              </p>
-            </div>
-
-            <div style="text-align: center; margin-top: 30px;">
-              <p style="color: #9CA3AF; font-size: 14px; line-height: 1.6; margin: 0;">
-                If you didn't request this verification code, please ignore this email or contact our support team.
-              </p>
-            </div>
-
-            <!-- Call to Action -->
-            <div style="text-align: center; margin: 30px 0;">
-              <div style="background: linear-gradient(135deg, #4F46E5, #0451c4); color: white; padding: 15px 30px; border-radius: 50px; display: inline-block; font-weight: 600; font-size: 16px;">
-                🚀 Get Started with Trivoca Entry Level
-              </div>
             </div>
           </div>
-
-          <!-- Footer Section -->
-          <div style="background: #1F2937; padding: 30px; text-align: center;">
-            <p style="color: #9CA3AF; font-size: 14px; margin: 0 0 10px;">
-              Master language proficiency with our comprehensive exam simulator.
+          
+          <!-- Verify Section -->
+          <div style="text-align: center; margin: 25px 0; position: relative; z-index: 1;">
+            <h3 style="color: #111827; font-size: 20px; font-weight: 700; margin-bottom: 10px;">Verify Your Email</h3>
+            <p style="color: #6B7280; font-size: 14px; margin: 0;">
+              Please use the verification code below to complete your registration.
             </p>
-            <div style="border-top: 1px solid #374151; margin: 20px 0; padding-top: 20px;">
-              <p style="color: #6B7280; font-size: 12px; margin: 0;">
-                © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
+          </div>
+          
+          <!-- Verification Code -->
+          <div style="text-align: center; margin: 25px 0; position: relative; z-index: 1;">
+            <div style="background: #1E3A8A; border-radius: 8px; padding: 20px;">
+              <p style="color: #ffffff; font-size: 14px; margin: 0 0 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600;">
+                Verification Code:
               </p>
+              <span style="font-size: 28px; font-weight: 700; color: #F59E0B; letter-spacing: 10px; font-family: 'Poppins', monospace;">
+                ${otp}
+              </span>
             </div>
+          </div>
+          
+          <!-- Important Note -->
+          <div style="text-align: center; margin-top: 20px; position: relative; z-index: 1;">
+            <h4 style="color: #111827; font-size: 14px; font-weight: 700; margin-bottom: 8px;">Important Note</h4>
+            <p style="color: #6B7280; font-size: 13px; margin: 0; line-height: 1.5;">
+              This verification code is valid for <b>5 Minutes</b>.<br>
+              Do not share this code with anyone for security reasons.
+            </p>
           </div>
         </div>
       `,
