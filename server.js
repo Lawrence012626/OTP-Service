@@ -55,58 +55,53 @@ app.post("/send-otp", async (req, res) => {
           filename: 'logo.png',
           path: './logo.png', // Path to your logo file
           cid: 'logo' // Content ID for embedding in HTML
-        },
-        {
-          filename: 'bubble.jpg',
-          path: './bubble.jpg', // Path to your circle decoration
-          cid: 'circle' // Content ID for embedding in HTML
         }
       ],
       html: `
         <!-- Import Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
         
-        <div style="position: relative; font-family: 'Poppins', Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; background: #ffffff; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden;">
+        <div style="position: relative; font-family: 'Poppins', Arial, sans-serif; max-width: 450px; margin: 0 auto; padding: 30px 25px; background: #ffffff; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
           <!-- Circle Decorations -->
-          <img src="cid:circle" alt="circle" style="position: absolute; top: -30px; right: -30px; width: 100px; opacity: 0.8;">
-          <img src="cid:circle" alt="circle" style="position: absolute; bottom: 40px; left: -40px; width: 120px; opacity: 0.8;">
+          <div style="position: absolute; top: -50px; right: -50px; width: 120px; height: 120px; background: #8B9DC3; border-radius: 50%; opacity: 0.7;"></div>
+          <div style="position: absolute; bottom: -60px; left: -60px; width: 140px; height: 140px; background: #8B9DC3; border-radius: 50%; opacity: 0.6;"></div>
           
           <!-- Header (Logo + Text Side by Side) -->
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 25px; position: relative; z-index: 1;">
-            <img src="cid:logo" alt="TriVoca Logo" style="height: 100px;">
+          <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 35px; position: relative; z-index: 2;">
+            <img src="cid:logo" alt="Trivoca Logo" style="height: 90px; width: auto;">
             <div>
-              <h2 style="color: #F59E0B; font-size: 25px; margin: 0; font-weight: 700;">Trivoca Entry Level</h2>
-              <p style="color: #374151; font-size: 13px; margin: 2px 0 0; line-height: 1.4;">
+              <h2 style="color: #F59E0B; font-size: 28px; margin: 0; font-weight: 700; line-height: 1.1;">Trivoca Entry Level</h2>
+              <p style="color: #6B7280; font-size: 14px; margin: 4px 0 0; line-height: 1.3; font-weight: 500;">
                 Language Proficiency<br>Exam Simulator
               </p>
             </div>
           </div>
           
           <!-- Verify Section -->
-          <div style="text-align: center; margin: 25px 0; position: relative; z-index: 1;">
-            <h3 style="color: #111827; font-size: 20px; font-weight: 700; margin-bottom: 10px;">Verify Your Email</h3>
-            <p style="color: #6B7280; font-size: 14px; margin: 0;">
+          <div style="text-align: center; margin: 35px 0; position: relative; z-index: 2;">
+            <h3 style="color: #1F2937; font-size: 26px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px;">Verify Your Email</h3>
+            <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5; font-weight: 400;">
               Please use the verification code below to complete your registration.
             </p>
           </div>
           
           <!-- Verification Code -->
-          <div style="text-align: center; margin: 25px 0; position: relative; z-index: 1;">
-            <div style="background: #1E3A8A; border-radius: 8px; padding: 20px;">
-              <p style="color: #ffffff; font-size: 14px; margin: 0 0 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600;">
-                Verification Code:
+          <div style="text-align: center; margin: 35px 0; position: relative; z-index: 2;">
+            <div style="background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%); border-radius: 12px; padding: 25px 20px; box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);">
+              <p style="color: #ffffff; font-size: 16px; margin: 0 0 15px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;">
+                VERIFICATION CODE:
               </p>
-              <span style="font-size: 28px; font-weight: 700; color: #F59E0B; letter-spacing: 10px; font-family: 'Poppins', monospace;">
-                ${otp}
-              </span>
+              <div style="font-size: 32px; font-weight: 700; color: #F59E0B; letter-spacing: 8px; font-family: 'Poppins', monospace; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                $ { ${otp} }
+              </div>
             </div>
           </div>
           
           <!-- Important Note -->
-          <div style="text-align: center; margin-top: 20px; position: relative; z-index: 1;">
-            <h4 style="color: #111827; font-size: 14px; font-weight: 700; margin-bottom: 8px;">Important Note</h4>
-            <p style="color: #6B7280; font-size: 13px; margin: 0; line-height: 1.5;">
-              This verification code is valid for <b>5 Minutes</b>.<br>
+          <div style="text-align: center; margin-top: 35px; position: relative; z-index: 2;">
+            <h4 style="color: #1F2937; font-size: 18px; font-weight: 700; margin-bottom: 10px;">Important Note</h4>
+            <p style="color: #6B7280; font-size: 15px; margin: 0; line-height: 1.6; font-weight: 400;">
+              This verification code is valid for <strong style="color: #1F2937;">5 Minutes</strong>.<br>
               Do not share this code with anyone for security reasons.
             </p>
           </div>
