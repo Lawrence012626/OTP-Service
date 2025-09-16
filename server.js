@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 const otpStore = new Map();
 
 // Gmail transporter (with App Password)
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransporter({
   service: 'gmail',
   host: 'smtp.gmail.com',
   port: 587,
@@ -45,58 +45,84 @@ app.post("/send-otp", async (req, res) => {
 
     console.log(`OTP for ${email}: ${otp}`); // For debugging - remove in production
 
-    // Email options
+    // Email options with updated template
     const mailOptions = {
-      from: `"Trivoca" <${process.env.SMTP_USER}>`,
+      from: `"Trivoca Entry Level" <${process.env.SMTP_USER}>`,
       to: email,
-      subject: "Your One-Time Password (OTP) Code",
+      subject: "Your One-Time Password (OTP) Code - Trivoca Entry Level",
+      attachments: [
+        {
+          filename: 'logo.png',
+          path: './logo.png', // Path to your logo file
+          cid: 'logo' // Content ID for embedding in HTML
+        }
+      ],
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 50%, #0451c4 100%); border-radius: 20px; overflow: hidden;">
           <!-- Header Section -->
-          <div style="text-align: center; padding: 40px 20px 30px; background: #F8FAFC;">
-            <h1 style="color: #1F2937; font-size: 32px; font-weight: bold; margin: 0;">TriVoca Entry Level</h1>
-            <p style="color: #6B7280; font-size: 16px; margin: 10px 0 0; font-weight: 400;">Language Proficiency Exam Simulator</p>
+          <div style="text-align: center; padding: 40px 20px 30px; background: rgba(255, 255, 255, 0.1);">
+            <!-- Logo/Image placement area -->
+            <div style="margin-bottom: 20px;">
+              <img src="cid:logo" alt="Trivoca Entry Level Logo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #FEF1C7;">
+            </div>
+            <h1 style="color: #FEF1C7; font-size: 42px; font-weight: bold; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Trivoca Entry Level</h1>
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 16px; margin: 8px 0 0; font-weight: 500;">Language Proficiency Exam Simulator</p>
           </div>
 
           <!-- Content Section -->
           <div style="background: white; padding: 40px 30px;">
             <div style="text-align: center; margin-bottom: 30px;">
-              <h2 style="color: #1F2937; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Verify Your Email</h2>
+              <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #4F46E5, #3B82F6); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white; font-size: 24px;">✉️</span>
+              </div>
+              <h2 style="color: #1F2937; font-size: 28px; font-weight: bold; margin: 0 0 10px;">Verify Your Email</h2>
               <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
                 Please use the verification code below to complete your registration.
               </p>
             </div>
 
             <!-- OTP Code Section -->
-            <div style="text-align: center; margin: 30px 0;">
-              <div style="background: #F8FAFC; border-radius: 8px; padding: 25px; margin: 0 auto; border: 1px solid #E5E7EB;">
-                <p style="color: #374151; font-size: 16px; margin: 0 0 10px; font-weight: 600;">Verification Code:</p>
-                <span style="font-size: 28px; font-weight: bold; color: #1F2937; letter-spacing: 4px; font-family: 'Courier New', monospace;">
+            <div style="text-align: center; margin: 40px 0;">
+              <div style="background: linear-gradient(135deg, #F3F4F6, #E5E7EB); border-radius: 16px; padding: 30px; margin: 0 auto; display: inline-block; border: 2px dashed #D1D5DB;">
+                <p style="color: #6B7280; font-size: 14px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Verification Code:</p>
+                <span style="font-size: 36px; font-weight: bold; color: #0451c4; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 0 2px 4px rgba(4, 81, 196, 0.2);">
                   ${otp}
                 </span>
               </div>
             </div>
 
-            <!-- Important Note Section -->
-            <div style="background: #FEF3C7; border-radius: 8px; padding: 20px; margin: 30px 0; border: 1px solid #FDE68A;">
-              <p style="color: #92400E; font-size: 16px; margin: 0 0 8px; font-weight: 600;">Important Note</p>
-              <p style="color: #92400E; font-size: 14px; margin: 0; line-height: 1.6;">
-                This verification code is valid for <strong>5 Minutes</strong>. Do not share this code with anyone for security reasons.
+            <!-- Info Section -->
+            <div style="background: #F8FAFC; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #0451c4;">
+              <p style="color: #374151; font-size: 14px; margin: 0 0 8px; font-weight: 600;">Important Note</p>
+              <p style="color: #6B7280; font-size: 14px; margin: 0; line-height: 1.6;">
+                This verification code is valid for <strong style="color: #0451c4;">5 Minutes</strong>. Do not share this code with anyone for security reasons.
               </p>
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
               <p style="color: #9CA3AF; font-size: 14px; line-height: 1.6; margin: 0;">
-                If you didn't request this verification code, please ignore this email.
+                If you didn't request this verification code, please ignore this email or contact our support team.
               </p>
+            </div>
+
+            <!-- Call to Action -->
+            <div style="text-align: center; margin: 30px 0;">
+              <div style="background: linear-gradient(135deg, #4F46E5, #0451c4); color: white; padding: 15px 30px; border-radius: 50px; display: inline-block; font-weight: 600; font-size: 16px;">
+                🚀 Get Started with Trivoca Entry Level
+              </div>
             </div>
           </div>
 
           <!-- Footer Section -->
-          <div style="background: #F8FAFC; padding: 20px; text-align: center; border-top: 1px solid #E5E7EB;">
-            <p style="color: #6B7280; font-size: 12px; margin: 0;">
-              © ${new Date().getFullYear()} TriVoca. All rights reserved.
+          <div style="background: #1F2937; padding: 30px; text-align: center;">
+            <p style="color: #9CA3AF; font-size: 14px; margin: 0 0 10px;">
+              Master language proficiency with our comprehensive exam simulator.
             </p>
+            <div style="border-top: 1px solid #374151; margin: 20px 0; padding-top: 20px;">
+              <p style="color: #6B7280; font-size: 12px; margin: 0;">
+                © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
+              </p>
+            </div>
           </div>
         </div>
       `,
@@ -192,7 +218,7 @@ app.post("/verify-otp", async (req, res) => {
 app.get("/health", (req, res) => {
   res.json({ 
     status: "OK",
-    message: "OTP service is running",
+    message: "Trivoca Entry Level OTP service is running",
     timestamp: new Date().toISOString()
   });
 });
@@ -210,6 +236,6 @@ setInterval(() => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Trivoca Entry Level Server running on port ${PORT}`);
   console.log(`📧 SMTP configured for: ${process.env.SMTP_USER}`);
 });
