@@ -51,72 +51,52 @@ app.post("/send-otp", async (req, res) => {
       to: email,
       subject: "Your One-Time Password (OTP) Code",
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 50%, #0451c4 100%); border-radius: 20px; overflow: hidden;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
           <!-- Header Section -->
-          <div style="text-align: center; padding: 40px 20px 30px; background: rgba(255, 255, 255, 0.1);">
-            <div style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: #FEF1C7; border-radius: 50%; margin-bottom: 20px;">
-              <div style="width: 40px; height: 40px; background: linear-gradient(45deg, #4F46E5, #3B82F6); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                <span style="color: white; font-weight: bold; font-size: 18px;">T</span>
-              </div>
-            </div>
-            <h1 style="color: #FEF1C7; font-size: 42px; font-weight: bold; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">TriVoca</h1>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 16px; margin: 8px 0 0; font-weight: 500;">Language Exam Simulation and Speech Practice</p>
+          <div style="text-align: center; padding: 40px 20px 30px; background: #F8FAFC;">
+            <h1 style="color: #1F2937; font-size: 32px; font-weight: bold; margin: 0;">TriVoca Entry Level</h1>
+            <p style="color: #6B7280; font-size: 16px; margin: 10px 0 0; font-weight: 400;">Language Proficiency Exam Simulator</p>
           </div>
 
           <!-- Content Section -->
           <div style="background: white; padding: 40px 30px;">
             <div style="text-align: center; margin-bottom: 30px;">
-              <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #4F46E5, #3B82F6); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
-                <span style="color: white; font-size: 24px;">✉️</span>
-              </div>
-              <h2 style="color: #1F2937; font-size: 28px; font-weight: bold; margin: 0 0 10px;">Verify Your Email</h2>
+              <h2 style="color: #1F2937; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Verify Your Email</h2>
               <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
-                Please use the verification code below to complete your registration
+                Please use the verification code below to complete your registration.
               </p>
             </div>
 
             <!-- OTP Code Section -->
-            <div style="text-align: center; margin: 40px 0;">
-              <div style="background: linear-gradient(135deg, #F3F4F6, #E5E7EB); border-radius: 16px; padding: 30px; margin: 0 auto; display: inline-block; border: 2px dashed #D1D5DB;">
-                <p style="color: #6B7280; font-size: 14px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Your Verification Code</p>
-                <span style="font-size: 36px; font-weight: bold; color: #0451c4; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 0 2px 4px rgba(4, 81, 196, 0.2);">
+            <div style="text-align: center; margin: 30px 0;">
+              <div style="background: #F8FAFC; border-radius: 8px; padding: 25px; margin: 0 auto; border: 1px solid #E5E7EB;">
+                <p style="color: #374151; font-size: 16px; margin: 0 0 10px; font-weight: 600;">Verification Code:</p>
+                <span style="font-size: 28px; font-weight: bold; color: #1F2937; letter-spacing: 4px; font-family: 'Courier New', monospace;">
                   ${otp}
                 </span>
               </div>
             </div>
 
-            <!-- Info Section -->
-            <div style="background: #F8FAFC; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #0451c4;">
-              <p style="color: #374151; font-size: 14px; margin: 0 0 8px; font-weight: 600;">⏰ Important Information:</p>
-              <p style="color: #6B7280; font-size: 14px; margin: 0; line-height: 1.6;">
-                This verification code is valid for <strong style="color: #0451c4;">5 minutes</strong>. Do not share this code with anyone for security reasons.
+            <!-- Important Note Section -->
+            <div style="background: #FEF3C7; border-radius: 8px; padding: 20px; margin: 30px 0; border: 1px solid #FDE68A;">
+              <p style="color: #92400E; font-size: 16px; margin: 0 0 8px; font-weight: 600;">Important Note</p>
+              <p style="color: #92400E; font-size: 14px; margin: 0; line-height: 1.6;">
+                This verification code is valid for <strong>5 Minutes</strong>. Do not share this code with anyone for security reasons.
               </p>
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
               <p style="color: #9CA3AF; font-size: 14px; line-height: 1.6; margin: 0;">
-                If you didn't request this verification code, please ignore this email or contact our support team.
+                If you didn't request this verification code, please ignore this email.
               </p>
-            </div>
-
-            <!-- Call to Action -->
-            <div style="text-align: center; margin: 30px 0;">
-              <div style="background: linear-gradient(135deg, #4F46E5, #0451c4); color: white; padding: 15px 30px; border-radius: 50px; display: inline-block; font-weight: 600; font-size: 16px;">
-                🚀 Get Started with TriVoca
-              </div>
             </div>
           </div>
 
           <!-- Footer Section -->
-          <div style="background: #1F2937; padding: 30px; text-align: center;">
-            <p style="color: #9CA3AF; font-size: 14px; margin: 0 0 10px;">
-              Fluency in Korean, Chinese, and Japanese starts here.
+          <div style="background: #F8FAFC; padding: 20px; text-align: center; border-top: 1px solid #E5E7EB;">
+            <p style="color: #6B7280; font-size: 12px; margin: 0;">
+              © ${new Date().getFullYear()} TriVoca. All rights reserved.
             </p>
-            <div style="border-top: 1px solid #374151; margin: 20px 0; padding-top: 20px;">
-              <p style="color: #6B7280; font-size: 12px; margin: 0;">
-                © ${new Date().getFullYear()} TriVoca. All rights reserved.
-              </p>
-            </div>
           </div>
         </div>
       `,
