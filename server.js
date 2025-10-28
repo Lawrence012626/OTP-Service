@@ -1,15 +1,28 @@
-﻿// server.js
+// server.js
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import express from "express";
+import admin from 'firebase-admin';
 import nodemailer from "nodemailer";
 
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
+// Initialize Firebase Admin
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    }),
+  });
+}
+
 // In-memory OTP storage (use Redis or database in production)
 const otpStore = new Map();
+const verifiedOTPs = new Map(); // For password reset verification tracking
 
 // Gmail transporter (with App Password)
 const transporter = nodemailer.createTransport({
@@ -134,7 +147,7 @@ app.post("/send-otp", async (req, res) => {
   }
 });
 
-// API route to verify OTP
+// API route to verify OTP (UPDATED)
 app.post("/verify-otp", async (req, res) => {
   try {
     const { email, otp } = req.body;
@@ -185,7 +198,14 @@ app.post("/verify-otp", async (req, res) => {
       });
     }
 
-    // OTP is valid - remove from store and return success
+    // OTP is valid - mark as verified for password reset (5 minutes validity)
+    verifiedOTPs.set(emailKey, {
+      verified: true,
+      timestamp: Date.now(),
+      expiresAt: Date.now() + (5 * 60 * 1000)
+    });
+
+    // Remove from OTP store
     otpStore.delete(emailKey);
     
     console.log(`OTP verified successfully for ${email}`);
@@ -204,22 +224,120 @@ app.post("/verify-otp", async (req, res) => {
   }
 });
 
+// NEW: Reset password endpoint
+app.post("/reset-password", async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        error: 'Email and new password are required'
+      });
+    }
+
+    const emailKey = email.toLowerCase();
+
+    // Check if OTP was verified
+    const verification = verifiedOTPs.get(emailKey);
+    
+    if (!verification) {
+      return res.status(400).json({
+        success: false,
+        error: 'OTP not verified. Please verify OTP first.'
+      });
+    }
+
+    if (Date.now() > verification.expiresAt) {
+      verifiedOTPs.delete(emailKey);
+      return res.status(400).json({
+        success: false,
+        error: 'Verification expired. Please request a new OTP.'
+      });
+    }
+
+    // Validate password
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        error: 'Password must be at least 6 characters long'
+      });
+    }
+
+    // Get user by email
+    const userRecord = await admin.auth().getUserByEmail(email);
+    
+    if (!userRecord) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    // Update password using Firebase Admin SDK
+    await admin.auth().updateUser(userRecord.uid, {
+      password: newPassword
+    });
+
+    // Clean up verification
+    verifiedOTPs.delete(emailKey);
+
+    console.log(`Password reset successful for: ${email}`);
+
+    res.json({
+      success: true,
+      message: 'Password reset successfully'
+    });
+
+  } catch (error) {
+    console.error('Reset password error:', error);
+    
+    let errorMessage = 'Failed to reset password';
+    
+    if (error.code === 'auth/user-not-found') {
+      errorMessage = 'User not found';
+    } else if (error.code === 'auth/invalid-password') {
+      errorMessage = 'Invalid password format';
+    }
+
+    res.status(500).json({
+      success: false,
+      error: errorMessage
+    });
+  }
+});
+
 // Health check endpoint
 app.get("/health", (req, res) => {
   res.json({ 
     status: "OK",
     message: "OTP service is running",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      sendOTP: 'POST /send-otp',
+      verifyOTP: 'POST /verify-otp',
+      resetPassword: 'POST /reset-password'
+    }
   });
 });
 
-// Clean up expired OTPs every 5 minutes
+// Clean up expired OTPs and verifications every 5 minutes
 setInterval(() => {
   const now = Date.now();
+  
+  // Clean expired OTPs
   for (const [email, data] of otpStore.entries()) {
     if (now > data.expiresAt) {
       otpStore.delete(email);
       console.log(`Cleaned up expired OTP for ${email}`);
+    }
+  }
+  
+  // Clean expired verifications
+  for (const [email, data] of verifiedOTPs.entries()) {
+    if (now > data.expiresAt) {
+      verifiedOTPs.delete(email);
+      console.log(`Cleaned up expired verification for ${email}`);
     }
   }
 }, 5 * 60 * 1000);
@@ -228,4 +346,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📧 SMTP configured for: ${process.env.SMTP_USER}`);
+  console.log(`🔥 Firebase Admin initialized`);
 });
