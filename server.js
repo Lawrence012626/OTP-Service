@@ -36,37 +36,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// SVG Icons
-const icons = {
-  celebration: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.5 2L2 8.5L8.5 5.5L5.5 2Z" fill="#f59e0b" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M18.5 2L22 8.5L15.5 5.5L18.5 2Z" fill="#f59e0b" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M12 2V8" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="12" cy="12" r="8" stroke="#1e3a8a" stroke-width="2" fill="#dbeafe"/>
-    <path d="M8 11C8.5 11.5 9.5 12 12 12C14.5 12 15.5 11.5 16 11" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="9" cy="10" r="1" fill="#1e3a8a"/>
-    <circle cx="15" cy="10" r="1" fill="#1e3a8a"/>
-  </svg>`,
-  
-  lock: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="5" y="11" width="14" height="11" rx="2" stroke="#1e3a8a" stroke-width="2" fill="#dbeafe"/>
-    <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="12" cy="16" r="2" fill="#f59e0b"/>
-    <path d="M12 18V20" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
-  </svg>`,
-  
-  checkCircle: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" fill="#10b981"/>
-    <path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>`,
-  
-  warning: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L2 20H22L12 2Z" fill="#f59e0b" stroke="#92400e" stroke-width="2" stroke-linejoin="round"/>
-    <path d="M12 9V13" stroke="#92400e" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="12" cy="17" r="1" fill="#92400e"/>
-  </svg>`
-};
-
 // Email template for REGISTRATION - WELCOME MESSAGE
 function getRegistrationEmailTemplate(otp) {
   return `
@@ -84,8 +53,8 @@ function getRegistrationEmailTemplate(otp) {
       <!-- Content Section -->
       <div style="background: white; padding: 40px 30px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <div style="display: inline-block; background: #dbeafe; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
-            ${icons.celebration}
+          <div style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%); border-radius: 50%; width: 80px; height: 80px; line-height: 80px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);">
+            <span style="font-size: 40px; color: white;">&#10003;</span>
           </div>
           <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Welcome to TriVoca!</h2>
           <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
@@ -104,12 +73,27 @@ function getRegistrationEmailTemplate(otp) {
         </div>
 
         <!-- Info Section -->
-        <div style="background: #eff6ff; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #f59e0b;">
-          <p style="color: #1e3a8a; font-size: 14px; margin: 0; line-height: 1.8; font-weight: 500;">
-            <span style="display: inline-block; vertical-align: middle; margin-right: 8px;">${icons.checkCircle}</span> Code expires in <strong style="color: #f59e0b;">5 minutes</strong><br>
-            <span style="display: inline-block; vertical-align: middle; margin-right: 8px;">${icons.checkCircle}</span> Use this code to complete your registration<br>
-            <span style="display: inline-block; vertical-align: middle; margin-right: 8px;">${icons.checkCircle}</span> Never share this code with anyone
-          </p>
+        <div style="background: #eff6ff; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #3b82f6;">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+              <td style="padding: 5px 0;">
+                <span style="display: inline-block; width: 20px; height: 20px; background: #10b981; border-radius: 50%; text-align: center; line-height: 20px; color: white; font-size: 12px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
+                <span style="color: #1e3a8a; font-size: 14px; font-weight: 500; vertical-align: middle;">Code expires in <strong style="color: #f59e0b;">5 minutes</strong></span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0;">
+                <span style="display: inline-block; width: 20px; height: 20px; background: #10b981; border-radius: 50%; text-align: center; line-height: 20px; color: white; font-size: 12px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
+                <span style="color: #1e3a8a; font-size: 14px; font-weight: 500; vertical-align: middle;">Use this code to complete your registration</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0;">
+                <span style="display: inline-block; width: 20px; height: 20px; background: #10b981; border-radius: 50%; text-align: center; line-height: 20px; color: white; font-size: 12px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
+                <span style="color: #1e3a8a; font-size: 14px; font-weight: 500; vertical-align: middle;">Never share this code with anyone</span>
+              </td>
+            </tr>
+          </table>
         </div>
 
         <div style="text-align: center; margin-top: 30px;">
@@ -143,8 +127,8 @@ function getPasswordResetEmailTemplate(otp) {
       <!-- Content Section -->
       <div style="background: white; padding: 40px 30px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <div style="display: inline-block; background: #dbeafe; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
-            ${icons.lock}
+          <div style="display: inline-block; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); border-radius: 50%; width: 80px; height: 80px; line-height: 80px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
+            <span style="font-size: 40px; color: white;">&#128274;</span>
           </div>
           <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Password Reset Request</h2>
           <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
@@ -164,15 +148,36 @@ function getPasswordResetEmailTemplate(otp) {
 
         <!-- Security Warning -->
         <div style="background: #fff7ed; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #f59e0b;">
-          <p style="color: #92400e; font-size: 15px; margin: 0 0 10px; font-weight: 700;">
-            <span style="display: inline-block; vertical-align: middle; margin-right: 8px;">${icons.warning}</span> Security Notice
+          <p style="color: #92400e; font-size: 15px; margin: 0 0 15px; font-weight: 700;">
+            <span style="display: inline-block; width: 24px; height: 24px; background: #f59e0b; border-radius: 50%; text-align: center; line-height: 24px; color: white; font-size: 16px; font-weight: bold; margin-right: 8px; vertical-align: middle;">!</span>
+            Security Notice
           </p>
-          <p style="color: #92400e; font-size: 14px; margin: 0; line-height: 1.8; font-weight: 500;">
-            <span style="display: inline-block; vertical-align: middle; margin-right: 8px;">${icons.checkCircle}</span> Code expires in <strong style="color: #f59e0b;">5 minutes</strong><br>
-            <span style="display: inline-block; vertical-align: middle; margin-right: 8px;">${icons.checkCircle}</span> Only use this code if you requested a password reset<br>
-            <span style="display: inline-block; vertical-align: middle; margin-right: 8px;">${icons.checkCircle}</span> Never share this code with anyone<br>
-            <span style="display: inline-block; vertical-align: middle; margin-right: 8px;">${icons.checkCircle}</span> If you didn't request this, please secure your account immediately
-          </p>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+              <td style="padding: 5px 0;">
+                <span style="display: inline-block; width: 18px; height: 18px; background: #10b981; border-radius: 50%; text-align: center; line-height: 18px; color: white; font-size: 11px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
+                <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">Code expires in <strong style="color: #f59e0b;">5 minutes</strong></span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0;">
+                <span style="display: inline-block; width: 18px; height: 18px; background: #10b981; border-radius: 50%; text-align: center; line-height: 18px; color: white; font-size: 11px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
+                <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">Only use this code if you requested a password reset</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0;">
+                <span style="display: inline-block; width: 18px; height: 18px; background: #10b981; border-radius: 50%; text-align: center; line-height: 18px; color: white; font-size: 11px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
+                <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">Never share this code with anyone</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0;">
+                <span style="display: inline-block; width: 18px; height: 18px; background: #10b981; border-radius: 50%; text-align: center; line-height: 18px; color: white; font-size: 11px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
+                <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">If you didn't request this, please secure your account immediately</span>
+              </td>
+            </tr>
+          </table>
         </div>
 
         <div style="text-align: center; margin-top: 30px;">
