@@ -41,9 +41,9 @@ function getRegistrationEmailTemplate(otp) {
   return `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
       <!-- Header Section - Blue Background with Banner -->
-      <div style="padding: 40px 20px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);">
-        <div style="text-align: center; margin-bottom: 15px;">
-          <img src="https://i.imgur.com/9Xe1XoX.png" alt="TriVoca Banner" style="max-width: 85%; height: auto;">
+      <div style="padding: 50px 20px; background: #1d3c73;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="TriVoca Banner" style="max-width: 100%; height: auto;">
         </div>
         <div style="text-align: center;">
           <p style="color: white; font-size: 16px; margin: 0; font-weight: 400; letter-spacing: 0.5px;">Language Proficiency Exam Simulator</p>
@@ -103,9 +103,9 @@ function getPasswordResetEmailTemplate(otp) {
   return `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
       <!-- Header Section - Blue Background with Banner -->
-      <div style="padding: 40px 20px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);">
-        <div style="text-align: center; margin-bottom: 15px;">
-          <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="TriVoca Banner" style="max-width: 85%; height: auto;">
+      <div style="padding: 50px 20px; background: #1d3c73;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="TriVoca Banner" style="max-width: 100%; height: auto;">
         </div>
         <div style="text-align: center;">
           <p style="color: white; font-size: 16px; margin: 0; font-weight: 400; letter-spacing: 0.5px;">Language Proficiency Exam Simulator</p>
