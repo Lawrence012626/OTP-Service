@@ -108,17 +108,17 @@ function getPasswordResetEmailTemplate(otp) {
   return `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
       <!-- Header Section -->
-      <div style="padding: 40px 20px 30px; background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);">
+      <div style="padding: 40px 20px 30px; background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);">
         <!-- Logo and Title Side by Side -->
         <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
           <img src="cid:logo" alt="Trivoca Logo" style="height: 60px; width: auto;">
           <div style="text-align: left;">
-            <h1 style="color: white; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1;">Trivoca Entry</h1>
-            <h1 style="color: white; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1;">Level</h1>
+            <h1 style="color: white; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Trivoca Entry</h1>
+            <h1 style="color: white; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Level</h1>
           </div>
         </div>
         <div style="text-align: center;">
-          <p style="color: rgba(255, 255, 255, 0.9); font-size: 16px; margin: 0; font-weight: 400;">Language Proficiency Exam Simulator</p>
+          <p style="color: rgba(255, 255, 255, 0.95); font-size: 16px; margin: 0; font-weight: 400;">Language Proficiency Exam Simulator</p>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ function getPasswordResetEmailTemplate(otp) {
           <div style="display: inline-block; background: #FEE2E2; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
             <span style="font-size: 48px;">🔐</span>
           </div>
-          <h2 style="color: #1F2937; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Password Reset Request</h2>
+          <h2 style="color: #DC2626; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Password Reset Request</h2>
           <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
             We received a request to reset your password. Use the code below to proceed.
           </p>
@@ -136,7 +136,7 @@ function getPasswordResetEmailTemplate(otp) {
 
         <!-- OTP Code Section -->
         <div style="text-align: center; margin: 30px 0;">
-          <div style="background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%); border-radius: 12px; padding: 25px; margin: 0 auto; border: 2px solid #DC2626;">
+          <div style="background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%); border-radius: 12px; padding: 25px; margin: 0 auto; border: 2px solid #EF4444; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.1);">
             <p style="color: #374151; font-size: 16px; margin: 0 0 10px; font-weight: 600;">Your Reset Code:</p>
             <span style="font-size: 32px; font-weight: bold; color: #DC2626; letter-spacing: 6px; font-family: 'Courier New', monospace;">
               ${otp}
@@ -163,7 +163,7 @@ function getPasswordResetEmailTemplate(otp) {
       </div>
 
       <!-- Footer Section -->
-      <div style="background: #F8FAFC; padding: 20px; text-align: center; border-top: 1px solid #E5E7EB;">
+      <div style="background: #FEF2F2; padding: 20px; text-align: center; border-top: 1px solid #FECACA;">
         <p style="color: #6B7280; font-size: 12px; margin: 0;">
           © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
         </p>
