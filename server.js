@@ -145,8 +145,8 @@ function getPasswordResetEmailTemplate(otp) {
         <!-- Content Section -->
         <div style="background: white; padding: 40px 30px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <div style="display: inline-block; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); border-radius: 50%; width: 90px; height: 90px; line-height: 90px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
-              <i class="fas fa-key" style="font-size: 45px; color: white;"></i>
+            <div style="display: inline-block; margin-bottom: 20px;">
+              <img src="https://drive.google.com/uc?export=download&id=19P1A36HJKGUZIPkfJ7TKX6TMU5r8Rrsa" alt="Password Reset" style="width: 90px; height: 90px; border-radius: 50%; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
             </div>
             <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Password Reset Request</h2>
             <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
@@ -470,7 +470,7 @@ setInterval(() => {
   // Clean expired verifications
   for (const [email, data] of verifiedOTPs.entries()) {
     if (now > data.expiresAt) {
-      verifiedOTPs.delete(emailKey);
+      verifiedOTPs.delete(email);
       console.log(`Cleaned up expired verification for ${email}`);
     }
   }
