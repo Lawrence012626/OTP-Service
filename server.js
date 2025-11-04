@@ -118,9 +118,9 @@ function getPasswordResetEmailTemplate(otp) {
           <div style="display: inline-block; background: #fef3c7; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
             <span style="font-size: 48px;">🔐</span>
           </div>
-          <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Reset Your Password</h2>
+          <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Password Reset Request</h2>
           <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
-            Use the verification code below to reset your password and secure your account.
+            We received a request to reset your password. Use the verification code below to proceed.
           </p>
         </div>
 
@@ -171,16 +171,8 @@ app.post("/send-otp", async (req, res) => {
       return res.status(400).json({ error: "Email is required" });
     }
 
-    // Normalize and validate type parameter
-    const normalizedType = type ? type.toString().toLowerCase().trim() : 'registration';
-    const otpType = normalizedType === 'reset' ? 'reset' : 'registration';
-
-    // DEBUG LOG - Remove after testing
-    console.log('📧 OTP Request Details:');
-    console.log('  - Email:', email);
-    console.log('  - Raw type received:', type);
-    console.log('  - Normalized type:', normalizedType);
-    console.log('  - Final otpType:', otpType);
+    // Validate type parameter
+    const otpType = type === 'reset' ? 'reset' : 'registration';
 
     // Generate 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -194,7 +186,7 @@ app.post("/send-otp", async (req, res) => {
       type: otpType
     });
 
-    console.log(`✅ OTP generated for ${email} (${otpType}): ${otp}`);
+    console.log(`OTP for ${email} (${otpType}): ${otp}`);
 
     // Get appropriate email template and subject based on type
     const htmlTemplate = otpType === 'reset' 
@@ -202,10 +194,8 @@ app.post("/send-otp", async (req, res) => {
       : getRegistrationEmailTemplate(otp);
 
     const subject = otpType === 'reset'
-      ? "Reset Your Password - Verification Code"
+      ? "Password Reset Request - Verification Code"
       : "Welcome to TriVoca - Verify Your Email";
-
-    console.log(`📨 Sending email with subject: "${subject}"`);
 
     // Email options
     const mailOptions = {
@@ -218,15 +208,13 @@ app.post("/send-otp", async (req, res) => {
     // Send email
     await transporter.sendMail(mailOptions);
 
-    console.log(`✉️ Email sent successfully to ${email}`);
-
     res.json({ 
       success: true, 
       message: `OTP sent successfully for ${otpType}`,
       type: otpType
     }); 
   } catch (error) {
-    console.error("❌ Email sending error:", error);
+    console.error("Email sending error:", error);
     res.status(500).json({ 
       success: false,
       error: "Failed to send OTP" 
@@ -295,7 +283,7 @@ app.post("/verify-otp", async (req, res) => {
     // Remove from OTP store
     otpStore.delete(emailKey);
     
-    console.log(`✅ OTP verified successfully for ${email}`);
+    console.log(`OTP verified successfully for ${email}`);
     
     res.json({ 
       success: true,
@@ -303,7 +291,7 @@ app.post("/verify-otp", async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ OTP verification error:", error);
+    console.error("OTP verification error:", error);
     res.status(500).json({ 
       success: false,
       message: "Failed to verify OTP" 
@@ -369,7 +357,7 @@ app.post("/reset-password", async (req, res) => {
     // Clean up verification
     verifiedOTPs.delete(emailKey);
 
-    console.log(`✅ Password reset successful for: ${email}`);
+    console.log(`Password reset successful for: ${email}`);
 
     res.json({
       success: true,
@@ -377,7 +365,7 @@ app.post("/reset-password", async (req, res) => {
     });
 
   } catch (error) {
-    console.error('❌ Reset password error:', error);
+    console.error('Reset password error:', error);
     
     let errorMessage = 'Failed to reset password';
     
@@ -416,7 +404,7 @@ setInterval(() => {
   for (const [email, data] of otpStore.entries()) {
     if (now > data.expiresAt) {
       otpStore.delete(email);
-      console.log(`🧹 Cleaned up expired OTP for ${email}`);
+      console.log(`Cleaned up expired OTP for ${email}`);
     }
   }
   
@@ -424,7 +412,7 @@ setInterval(() => {
   for (const [email, data] of verifiedOTPs.entries()) {
     if (now > data.expiresAt) {
       verifiedOTPs.delete(email);
-      console.log(`🧹 Cleaned up expired verification for ${email}`);
+      console.log(`Cleaned up expired verification for ${email}`);
     }
   }
 }, 5 * 60 * 1000);
