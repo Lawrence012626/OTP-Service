@@ -46,41 +46,24 @@ function getRegistrationEmailTemplate(otp) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Welcome to Trivoca</title>
     </head>
-    <body style="margin: 0; padding: 0; background: linear-gradient(135deg, #EFF6FF 0%, #FEF9C3 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+    <body style="margin: 0; padding: 0; background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
       <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px;">
         <tr>
           <td align="center">
             <!-- Main Container -->
-            <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 24px; box-shadow: 0 20px 50px rgba(37, 99, 235, 0.15); overflow: hidden; max-width: 100%;">
+            <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 100%;">
               
-              <!-- Header with Logo and Title -->
+              <!-- Header -->
               <tr>
-                <td style="background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%); padding: 50px 40px; text-align: center; position: relative;">
-                  <!-- Decorative circles -->
-                  <div style="position: absolute; top: -30px; left: -30px; width: 100px; height: 100px; background: rgba(250, 204, 21, 0.2); border-radius: 50%; filter: blur(40px);"></div>
-                  <div style="position: absolute; bottom: -20px; right: -20px; width: 80px; height: 80px; background: rgba(250, 204, 21, 0.3); border-radius: 50%; filter: blur(30px);"></div>
-                  
+                <td style="background: #1e40af; padding: 40px; text-align: center;">
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td align="center">
-                        <!-- Logo and Text Container -->
-                        <table cellpadding="0" cellspacing="0" style="display: inline-block;">
-                          <tr>
-                            <td style="vertical-align: middle; padding-right: 20px;">
-                              <img src="cid:logo" alt="Trivoca Logo" style="width: 80px; height: 80px; display: block; filter: drop-shadow(0 4px 12px rgba(250, 204, 21, 0.3));">
-                            </td>
-                            <td style="vertical-align: middle; text-align: left;">
-                              <h1 style="margin: 0; padding: 0; color: white; font-size: 36px; font-weight: 800; line-height: 1.1; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">
-                                Trivoca<br>Entry Level
-                              </h1>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-top: 15px;">
-                        <p style="margin: 0; color: rgba(255, 255, 255, 0.95); font-size: 16px; font-weight: 500; letter-spacing: 0.5px;">
+                        <img src="cid:logo" alt="Trivoca Logo" style="width: 60px; height: 60px; display: block; margin-bottom: 16px;">
+                        <h1 style="margin: 0; padding: 0; color: white; font-size: 28px; font-weight: 700; line-height: 1.2;">
+                          Trivoca Entry Level
+                        </h1>
+                        <p style="margin: 8px 0 0 0; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 500;">
                           Language Proficiency Exam Simulator
                         </p>
                       </td>
@@ -91,25 +74,14 @@ function getRegistrationEmailTemplate(otp) {
 
               <!-- Content Section -->
               <tr>
-                <td style="padding: 50px 40px;">
-                  <!-- Welcome Icon -->
+                <td style="padding: 48px 40px;">
+                  <!-- Welcome Message -->
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td align="center" style="padding-bottom: 30px;">
-                        <div style="display: inline-block; background: linear-gradient(135deg, #DBEAFE 0%, #FEF9C3 100%); border-radius: 50%; width: 100px; height: 100px; line-height: 100px; text-align: center; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);">
-                          <span style="font-size: 50px; vertical-align: middle;">🎉</span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-bottom: 15px;">
-                        <h2 style="margin: 0; color: #1E3A8A; font-size: 28px; font-weight: 700;">Welcome to Trivoca!</h2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-bottom: 35px;">
-                        <p style="margin: 0; color: #64748B; font-size: 16px; line-height: 1.6;">
-                          You're just one step away from starting your<br>language proficiency journey.
+                      <td align="center" style="padding-bottom: 32px;">
+                        <h2 style="margin: 0; color: #1e293b; font-size: 24px; font-weight: 600;">Welcome to Trivoca!</h2>
+                        <p style="margin: 12px 0 0 0; color: #64748b; font-size: 16px; line-height: 1.5;">
+                          You're just one step away from starting your language proficiency journey.
                         </p>
                       </td>
                     </tr>
@@ -118,43 +90,36 @@ function getRegistrationEmailTemplate(otp) {
                   <!-- OTP Code Box -->
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td align="center">
-                        <table cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #EFF6FF 0%, #FEF9C3 100%); border-radius: 16px; border: 3px solid #3B82F6; padding: 30px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);">
-                          <tr>
-                            <td align="center" style="padding-bottom: 12px;">
-                              <p style="margin: 0; color: #1E3A8A; font-size: 16px; font-weight: 600;">Your Verification Code:</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td align="center">
-                              <span style="font-size: 40px; font-weight: 800; color: #1E40AF; letter-spacing: 12px; font-family: 'Courier New', monospace; text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);">
-                                ${otp}
-                              </span>
-                            </td>
-                          </tr>
-                        </table>
+                      <td align="center" style="padding-bottom: 32px;">
+                        <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 32px; text-align: center;">
+                          <p style="margin: 0 0 16px 0; color: #475569; font-size: 16px; font-weight: 500;">Your Verification Code:</p>
+                          <div style="font-size: 40px; font-weight: 700; color: #1e40af; letter-spacing: 8px; font-family: 'Courier New', monospace; padding: 8px 0;">
+                            ${otp}
+                          </div>
+                        </div>
                       </td>
                     </tr>
                   </table>
 
                   <!-- Info Box -->
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
+                  <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #3B82F6;">
-                        <p style="margin: 0; color: #1E3A8A; font-size: 14px; line-height: 1.8; font-weight: 500;">
-                          ✓ Code expires in <strong style="color: #1E40AF;">5 minutes</strong><br>
-                          ✓ Use this code to complete your registration<br>
-                          ✓ Never share this code with anyone
+                      <td style="background: #f1f5f9; border-radius: 8px; padding: 24px;">
+                        <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">
+                          <strong>Important:</strong><br>
+                          • Code expires in <strong style="color: #dc2626;">5 minutes</strong><br>
+                          • Use this code to complete your registration<br>
+                          • Never share this code with anyone
                         </p>
                       </td>
                     </tr>
                   </table>
 
                   <!-- Footer Note -->
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 32px;">
                     <tr>
                       <td align="center">
-                        <p style="margin: 0; color: #94A3B8; font-size: 14px; line-height: 1.6;">
+                        <p style="margin: 0; color: #94a3b8; font-size: 14px; line-height: 1.5;">
                           If you didn't create this account, please ignore this email.
                         </p>
                       </td>
@@ -165,8 +130,8 @@ function getRegistrationEmailTemplate(otp) {
 
               <!-- Footer -->
               <tr>
-                <td style="background: linear-gradient(135deg, #F8FAFC 0%, #FEF9C3 100%); padding: 25px 40px; text-align: center; border-top: 1px solid #E2E8F0;">
-                  <p style="margin: 0; color: #64748B; font-size: 13px;">
+                <td style="background: #f8fafc; padding: 24px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+                  <p style="margin: 0; color: #64748b; font-size: 12px;">
                     © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
                   </p>
                 </td>
@@ -190,42 +155,25 @@ function getPasswordResetEmailTemplate(otp) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Reset Your Password - Trivoca</title>
     </head>
-    <body style="margin: 0; padding: 0; background: linear-gradient(135deg, #EFF6FF 0%, #FEF9C3 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+    <body style="margin: 0; padding: 0; background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
       <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px;">
         <tr>
           <td align="center">
             <!-- Main Container -->
-            <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 24px; box-shadow: 0 20px 50px rgba(37, 99, 235, 0.15); overflow: hidden; max-width: 100%;">
+            <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 100%;">
               
-              <!-- Header with Logo and Title -->
+              <!-- Header -->
               <tr>
-                <td style="background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%); padding: 50px 40px; text-align: center; position: relative;">
-                  <!-- Decorative circles -->
-                  <div style="position: absolute; top: -30px; left: -30px; width: 100px; height: 100px; background: rgba(250, 204, 21, 0.2); border-radius: 50%; filter: blur(40px);"></div>
-                  <div style="position: absolute; bottom: -20px; right: -20px; width: 80px; height: 80px; background: rgba(250, 204, 21, 0.3); border-radius: 50%; filter: blur(30px);"></div>
-                  
+                <td style="background: #dc2626; padding: 40px; text-align: center;">
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td align="center">
-                        <!-- Logo and Text Container -->
-                        <table cellpadding="0" cellspacing="0" style="display: inline-block;">
-                          <tr>
-                            <td style="vertical-align: middle; padding-right: 20px;">
-                              <img src="cid:logo" alt="Trivoca Logo" style="width: 80px; height: 80px; display: block; filter: drop-shadow(0 4px 12px rgba(250, 204, 21, 0.3));">
-                            </td>
-                            <td style="vertical-align: middle; text-align: left;">
-                              <h1 style="margin: 0; padding: 0; color: white; font-size: 36px; font-weight: 800; line-height: 1.1; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">
-                                Trivoca<br>Entry Level
-                              </h1>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-top: 15px;">
-                        <p style="margin: 0; color: rgba(255, 255, 255, 0.95); font-size: 16px; font-weight: 500; letter-spacing: 0.5px;">
-                          Language Proficiency Exam Simulator
+                        <img src="cid:logo" alt="Trivoca Logo" style="width: 60px; height: 60px; display: block; margin-bottom: 16px;">
+                        <h1 style="margin: 0; padding: 0; color: white; font-size: 28px; font-weight: 700; line-height: 1.2;">
+                          Password Reset
+                        </h1>
+                        <p style="margin: 8px 0 0 0; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 500;">
+                          Trivoca Entry Level
                         </p>
                       </td>
                     </tr>
@@ -235,25 +183,14 @@ function getPasswordResetEmailTemplate(otp) {
 
               <!-- Content Section -->
               <tr>
-                <td style="padding: 50px 40px;">
-                  <!-- Security Icon -->
+                <td style="padding: 48px 40px;">
+                  <!-- Security Message -->
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td align="center" style="padding-bottom: 30px;">
-                        <div style="display: inline-block; background: linear-gradient(135deg, #DBEAFE 0%, #FEF9C3 100%); border-radius: 50%; width: 100px; height: 100px; line-height: 100px; text-align: center; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);">
-                          <span style="font-size: 50px; vertical-align: middle;">🔐</span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-bottom: 15px;">
-                        <h2 style="margin: 0; color: #1E3A8A; font-size: 28px; font-weight: 700;">Reset Your Password</h2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-bottom: 35px;">
-                        <p style="margin: 0; color: #64748B; font-size: 16px; line-height: 1.6;">
-                          Use the verification code below to reset your password<br>and secure your account.
+                      <td align="center" style="padding-bottom: 32px;">
+                        <h2 style="margin: 0; color: #1e293b; font-size: 24px; font-weight: 600;">Reset Your Password</h2>
+                        <p style="margin: 12px 0 0 0; color: #64748b; font-size: 16px; line-height: 1.5;">
+                          Use the verification code below to reset your password and secure your account.
                         </p>
                       </td>
                     </tr>
@@ -262,46 +199,38 @@ function getPasswordResetEmailTemplate(otp) {
                   <!-- OTP Code Box -->
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td align="center">
-                        <table cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #FEF9C3 0%, #FEF08A 100%); border-radius: 16px; border: 3px solid #FBBF24; padding: 30px; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
-                          <tr>
-                            <td align="center" style="padding-bottom: 12px;">
-                              <p style="margin: 0; color: #92400E; font-size: 16px; font-weight: 600;">Your Reset Code:</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td align="center">
-                              <span style="font-size: 40px; font-weight: 800; color: #D97706; letter-spacing: 12px; font-family: 'Courier New', monospace; text-shadow: 0 2px 4px rgba(217, 119, 6, 0.1);">
-                                ${otp}
-                              </span>
-                            </td>
-                          </tr>
-                        </table>
+                      <td align="center" style="padding-bottom: 32px;">
+                        <div style="background: #fef2f2; border: 2px solid #fecaca; border-radius: 12px; padding: 32px; text-align: center;">
+                          <p style="margin: 0 0 16px 0; color: #dc2626; font-size: 16px; font-weight: 500;">Your Reset Code:</p>
+                          <div style="font-size: 40px; font-weight: 700; color: #dc2626; letter-spacing: 8px; font-family: 'Courier New', monospace; padding: 8px 0;">
+                            ${otp}
+                          </div>
+                        </div>
                       </td>
                     </tr>
                   </table>
 
                   <!-- Warning Box -->
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
+                  <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #FBBF24;">
-                        <p style="margin: 0 0 12px 0; color: #92400E; font-size: 16px; font-weight: 700;">⚠️ Security Alert</p>
-                        <p style="margin: 0; color: #92400E; font-size: 14px; line-height: 1.8; font-weight: 500;">
+                      <td style="background: #fef2f2; border-radius: 8px; padding: 24px;">
+                        <p style="margin: 0 0 12px 0; color: #dc2626; font-size: 16px; font-weight: 600;">Security Notice</p>
+                        <p style="margin: 0; color: #991b1b; font-size: 14px; line-height: 1.6;">
                           • This code expires in <strong>5 minutes</strong><br>
-                          • Only use this code if you requested a password reset<br>
+                          • Only use if you requested a password reset<br>
                           • Never share this code with anyone<br>
-                          • If you didn't request this, secure your account immediately
+                          • Contact support if you didn't request this
                         </p>
                       </td>
                     </tr>
                   </table>
 
                   <!-- Footer Note -->
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 32px;">
                     <tr>
                       <td align="center">
-                        <p style="margin: 0; color: #94A3B8; font-size: 14px; line-height: 1.6;">
-                          If you didn't request a password reset, please ignore this email<br>or contact support if you're concerned about your account security.
+                        <p style="margin: 0; color: #94a3b8; font-size: 14px; line-height: 1.5;">
+                          If you didn't request a password reset, please ignore this email.
                         </p>
                       </td>
                     </tr>
@@ -311,8 +240,8 @@ function getPasswordResetEmailTemplate(otp) {
 
               <!-- Footer -->
               <tr>
-                <td style="background: linear-gradient(135deg, #F8FAFC 0%, #FEF9C3 100%); padding: 25px 40px; text-align: center; border-top: 1px solid #E2E8F0;">
-                  <p style="margin: 0; color: #64748B; font-size: 13px;">
+                <td style="background: #f8fafc; padding: 24px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+                  <p style="margin: 0; color: #64748b; font-size: 12px;">
                     © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
                   </p>
                 </td>
