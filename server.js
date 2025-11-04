@@ -171,8 +171,16 @@ app.post("/send-otp", async (req, res) => {
       return res.status(400).json({ error: "Email is required" });
     }
 
-    // Validate type parameter
-    const otpType = type === 'reset' ? 'reset' : 'registration';
+    // Normalize and validate type parameter
+    const normalizedType = type ? type.toString().toLowerCase().trim() : 'registration';
+    const otpType = normalizedType === 'reset' ? 'reset' : 'registration';
+
+    // DEBUG LOG - Remove after testing
+    console.log('📧 OTP Request Details:');
+    console.log('  - Email:', email);
+    console.log('  - Raw type received:', type);
+    console.log('  - Normalized type:', normalizedType);
+    console.log('  - Final otpType:', otpType);
 
     // Generate 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -186,7 +194,7 @@ app.post("/send-otp", async (req, res) => {
       type: otpType
     });
 
-    console.log(`OTP for ${email} (${otpType}): ${otp}`);
+    console.log(`✅ OTP generated for ${email} (${otpType}): ${otp}`);
 
     // Get appropriate email template and subject based on type
     const htmlTemplate = otpType === 'reset' 
@@ -196,6 +204,8 @@ app.post("/send-otp", async (req, res) => {
     const subject = otpType === 'reset'
       ? "Reset Your Password - Verification Code"
       : "Welcome to TriVoca - Verify Your Email";
+
+    console.log(`📨 Sending email with subject: "${subject}"`);
 
     // Email options
     const mailOptions = {
@@ -208,13 +218,15 @@ app.post("/send-otp", async (req, res) => {
     // Send email
     await transporter.sendMail(mailOptions);
 
+    console.log(`✉️ Email sent successfully to ${email}`);
+
     res.json({ 
       success: true, 
       message: `OTP sent successfully for ${otpType}`,
       type: otpType
     }); 
   } catch (error) {
-    console.error("Email sending error:", error);
+    console.error("❌ Email sending error:", error);
     res.status(500).json({ 
       success: false,
       error: "Failed to send OTP" 
@@ -283,7 +295,7 @@ app.post("/verify-otp", async (req, res) => {
     // Remove from OTP store
     otpStore.delete(emailKey);
     
-    console.log(`OTP verified successfully for ${email}`);
+    console.log(`✅ OTP verified successfully for ${email}`);
     
     res.json({ 
       success: true,
@@ -291,7 +303,7 @@ app.post("/verify-otp", async (req, res) => {
     });
 
   } catch (error) {
-    console.error("OTP verification error:", error);
+    console.error("❌ OTP verification error:", error);
     res.status(500).json({ 
       success: false,
       message: "Failed to verify OTP" 
@@ -357,7 +369,7 @@ app.post("/reset-password", async (req, res) => {
     // Clean up verification
     verifiedOTPs.delete(emailKey);
 
-    console.log(`Password reset successful for: ${email}`);
+    console.log(`✅ Password reset successful for: ${email}`);
 
     res.json({
       success: true,
@@ -365,7 +377,7 @@ app.post("/reset-password", async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Reset password error:', error);
+    console.error('❌ Reset password error:', error);
     
     let errorMessage = 'Failed to reset password';
     
@@ -404,7 +416,7 @@ setInterval(() => {
   for (const [email, data] of otpStore.entries()) {
     if (now > data.expiresAt) {
       otpStore.delete(email);
-      console.log(`Cleaned up expired OTP for ${email}`);
+      console.log(`🧹 Cleaned up expired OTP for ${email}`);
     }
   }
   
@@ -412,7 +424,7 @@ setInterval(() => {
   for (const [email, data] of verifiedOTPs.entries()) {
     if (now > data.expiresAt) {
       verifiedOTPs.delete(email);
-      console.log(`Cleaned up expired verification for ${email}`);
+      console.log(`🧹 Cleaned up expired verification for ${email}`);
     }
   }
 }, 5 * 60 * 1000);
