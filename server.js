@@ -194,7 +194,7 @@ app.post("/send-otp", async (req, res) => {
       : getRegistrationEmailTemplate(otp);
 
     const subject = otpType === 'reset'
-      ? "Password Reset - Verification Code"
+      ? "Reset Your Password - Verification Code"
       : "Welcome to TriVoca - Verify Your Email";
 
     // Email options
