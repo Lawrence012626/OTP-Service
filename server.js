@@ -107,9 +107,6 @@ function getPasswordResetEmailTemplate(otp) {
         <div style="text-align: center; margin-bottom: 20px;">
           <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="TriVoca Banner" style="max-width: 100%; height: auto;">
         </div>
-        <div style="text-align: center;">
-          <p style="color: white; font-size: 16px; margin: 0; font-weight: 400; letter-spacing: 0.5px;">Language Proficiency Exam Simulator</p>
-        </div>
       </div>
 
       <!-- Content Section -->
