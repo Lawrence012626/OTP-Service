@@ -22,9 +22,9 @@ if (!admin.apps.length) {
 
 // In-memory OTP storage (use Redis or database in production)
 const otpStore = new Map();
-const verifiedOTPs = new Map();
+const verifiedOTPs = new Map(); // For password reset verification tracking
 
-// Gmail transporter
+// Gmail transporter (with App Password)
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
@@ -36,293 +36,129 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Email template for REGISTRATION
+// Email template for REGISTRATION - WELCOME MESSAGE
 function getRegistrationEmailTemplate(otp) {
   return `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Welcome to Trivoca</title>
-    </head>
-    <body style="margin: 0; padding: 0; background: linear-gradient(135deg, #EFF6FF 0%, #FEF9C3 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
-      <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px;">
-        <tr>
-          <td align="center">
-            <!-- Main Container -->
-            <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 24px; box-shadow: 0 20px 50px rgba(37, 99, 235, 0.15); overflow: hidden; max-width: 100%;">
-              
-              <!-- Header with Logo and Title -->
-              <tr>
-                <td style="background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%); padding: 50px 40px; text-align: center; position: relative;">
-                  <!-- Decorative circles -->
-                  <div style="position: absolute; top: -30px; left: -30px; width: 100px; height: 100px; background: rgba(250, 204, 21, 0.2); border-radius: 50%; filter: blur(40px);"></div>
-                  <div style="position: absolute; bottom: -20px; right: -20px; width: 80px; height: 80px; background: rgba(250, 204, 21, 0.3); border-radius: 50%; filter: blur(30px);"></div>
-                  
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="center">
-                        <!-- Logo and Text Container -->
-                        <table cellpadding="0" cellspacing="0" style="display: inline-block;">
-                          <tr>
-                            <td style="vertical-align: middle; padding-right: 20px;">
-                              <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" style="width: 80px; height: 80px; display: block; filter: drop-shadow(0 4px 12px rgba(250, 204, 21, 0.3));">
-                            </td>
-                            <td style="vertical-align: middle; text-align: left;">
-                              <h1 style="margin: 0; padding: 0; color: white; font-size: 36px; font-weight: 800; line-height: 1.1; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">
-                                Trivoca<br>Entry Level
-                              </h1>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-top: 15px;">
-                        <p style="margin: 0; color: rgba(255, 255, 255, 0.95); font-size: 16px; font-weight: 500; letter-spacing: 0.5px;">
-                          Language Proficiency Exam Simulator
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <!-- Header Section - Blue Background with Banner -->
+      <div style="padding: 40px 20px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="https://i.imgur.com/9Xe1XoX.png" alt="TriVoca Banner" style="max-width: 85%; height: auto;">
+        </div>
+        <div style="text-align: center;">
+          <p style="color: white; font-size: 16px; margin: 0; font-weight: 400; letter-spacing: 0.5px;">Language Proficiency Exam Simulator</p>
+        </div>
+      </div>
 
-              <!-- Content Section -->
-              <tr>
-                <td style="padding: 50px 40px;">
-                  <!-- Welcome Icon -->
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="center" style="padding-bottom: 30px;">
-                        <div style="display: inline-block; background: linear-gradient(135deg, #DBEAFE 0%, #FEF9C3 100%); border-radius: 50%; width: 100px; height: 100px; line-height: 100px; text-align: center; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);">
-                          <span style="font-size: 50px; vertical-align: middle;">🎉</span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-bottom: 15px;">
-                        <h2 style="margin: 0; color: #1E3A8A; font-size: 28px; font-weight: 700;">Welcome to Trivoca!</h2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-bottom: 35px;">
-                        <p style="margin: 0; color: #64748B; font-size: 16px; line-height: 1.6;">
-                          You're just one step away from starting your<br>language proficiency journey.
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
+      <!-- Content Section -->
+      <div style="background: white; padding: 40px 30px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <div style="display: inline-block; background: #dbeafe; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
+            <span style="font-size: 48px;">🎉</span>
+          </div>
+          <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Welcome to TriVoca!</h2>
+          <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
+            You're just one step away from starting your language proficiency journey.
+          </p>
+        </div>
 
-                  <!-- OTP Code Box -->
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="center">
-                        <table cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #EFF6FF 0%, #FEF9C3 100%); border-radius: 16px; border: 3px solid #3B82F6; padding: 30px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);">
-                          <tr>
-                            <td align="center" style="padding-bottom: 12px;">
-                              <p style="margin: 0; color: #1E3A8A; font-size: 16px; font-weight: 600;">Your Verification Code:</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td align="center">
-                              <span style="font-size: 40px; font-weight: 800; color: #1E40AF; letter-spacing: 12px; font-family: 'Courier New', monospace; text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);">
-                                ${otp}
-                              </span>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
+        <!-- OTP Code Section -->
+        <div style="text-align: center; margin: 30px 0;">
+          <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 16px; padding: 30px; margin: 0 auto; border: 3px solid #1e3a8a; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);">
+            <p style="color: #1e3a8a; font-size: 16px; margin: 0 0 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Your Verification Code:</p>
+            <span style="font-size: 36px; font-weight: bold; color: #f59e0b; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+              ${otp}
+            </span>
+          </div>
+        </div>
 
-                  <!-- Info Box -->
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
-                    <tr>
-                      <td style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #3B82F6;">
-                        <p style="margin: 0; color: #1E3A8A; font-size: 14px; line-height: 1.8; font-weight: 500;">
-                          ✓ Code expires in <strong style="color: #1E40AF;">5 minutes</strong><br>
-                          ✓ Use this code to complete your registration<br>
-                          ✓ Never share this code with anyone
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
+        <!-- Info Section -->
+        <div style="background: #eff6ff; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #f59e0b;">
+          <p style="color: #1e3a8a; font-size: 14px; margin: 0; line-height: 1.8; font-weight: 500;">
+            ✓ Code expires in <strong style="color: #f59e0b;">5 minutes</strong><br>
+            ✓ Use this code to complete your registration<br>
+            ✓ Never share this code with anyone
+          </p>
+        </div>
 
-                  <!-- Footer Note -->
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
-                    <tr>
-                      <td align="center">
-                        <p style="margin: 0; color: #94A3B8; font-size: 14px; line-height: 1.6;">
-                          If you didn't create this account, please ignore this email.
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+        <div style="text-align: center; margin-top: 30px;">
+          <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0;">
+            If you didn't create this account, please ignore this email.
+          </p>
+        </div>
+      </div>
 
-              <!-- Footer -->
-              <tr>
-                <td style="background: linear-gradient(135deg, #F8FAFC 0%, #FEF9C3 100%); padding: 25px 40px; text-align: center; border-top: 1px solid #E2E8F0;">
-                  <p style="margin: 0; color: #64748B; font-size: 13px;">
-                    © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
-                  </p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </body>
-    </html>
+      <!-- Footer Section -->
+      <div style="background: #f8fafc; padding: 25px; text-align: center; border-top: 2px solid #e2e8f0;">
+        <p style="color: #64748b; font-size: 12px; margin: 0; font-weight: 500;">
+          © ${new Date().getFullYear()} TriVoca Entry Level. All rights reserved.
+        </p>
+      </div>
+    </div>
   `;
 }
 
-// Email template for PASSWORD RESET
+// Email template for PASSWORD RESET - SECURITY MESSAGE
 function getPasswordResetEmailTemplate(otp) {
   return `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Reset Your Password - Trivoca</title>
-    </head>
-    <body style="margin: 0; padding: 0; background: linear-gradient(135deg, #EFF6FF 0%, #FEF9C3 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
-      <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px;">
-        <tr>
-          <td align="center">
-            <!-- Main Container -->
-            <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 24px; box-shadow: 0 20px 50px rgba(37, 99, 235, 0.15); overflow: hidden; max-width: 100%;">
-              
-              <!-- Header with Logo and Title -->
-              <tr>
-                <td style="background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%); padding: 50px 40px; text-align: center; position: relative;">
-                  <!-- Decorative circles -->
-                  <div style="position: absolute; top: -30px; left: -30px; width: 100px; height: 100px; background: rgba(250, 204, 21, 0.2); border-radius: 50%; filter: blur(40px);"></div>
-                  <div style="position: absolute; bottom: -20px; right: -20px; width: 80px; height: 80px; background: rgba(250, 204, 21, 0.3); border-radius: 50%; filter: blur(30px);"></div>
-                  
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="center">
-                        <!-- Logo and Text Container -->
-                        <table cellpadding="0" cellspacing="0" style="display: inline-block;">
-                          <tr>
-                            <td style="vertical-align: middle; padding-right: 20px;">
-                              <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="Trivoca Logo" style="width: 80px; height: 80px; display: block; filter: drop-shadow(0 4px 12px rgba(250, 204, 21, 0.3));">
-                            </td>
-                            <td style="vertical-align: middle; text-align: left;">
-                              <h1 style="margin: 0; padding: 0; color: white; font-size: 36px; font-weight: 800; line-height: 1.1; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">
-                                Trivoca<br>Entry Level
-                              </h1>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-top: 15px;">
-                        <p style="margin: 0; color: rgba(255, 255, 255, 0.95); font-size: 16px; font-weight: 500; letter-spacing: 0.5px;">
-                          Language Proficiency Exam Simulator
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <!-- Header Section - Blue Background with Banner -->
+      <div style="padding: 40px 20px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="https://i.imgur.com/9Xe1XoX.png" alt="TriVoca Banner" style="max-width: 85%; height: auto;">
+        </div>
+        <div style="text-align: center;">
+          <p style="color: white; font-size: 16px; margin: 0; font-weight: 400; letter-spacing: 0.5px;">Language Proficiency Exam Simulator</p>
+        </div>
+      </div>
 
-              <!-- Content Section -->
-              <tr>
-                <td style="padding: 50px 40px;">
-                  <!-- Security Icon -->
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="center" style="padding-bottom: 30px;">
-                        <div style="display: inline-block; background: linear-gradient(135deg, #DBEAFE 0%, #FEF9C3 100%); border-radius: 50%; width: 100px; height: 100px; line-height: 100px; text-align: center; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);">
-                          <span style="font-size: 50px; vertical-align: middle;">🔐</span>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-bottom: 15px;">
-                        <h2 style="margin: 0; color: #1E3A8A; font-size: 28px; font-weight: 700;">Reset Your Password</h2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" style="padding-bottom: 35px;">
-                        <p style="margin: 0; color: #64748B; font-size: 16px; line-height: 1.6;">
-                          Use the verification code below to reset your password<br>and secure your account.
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
+      <!-- Content Section -->
+      <div style="background: white; padding: 40px 30px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <div style="display: inline-block; background: #fef3c7; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
+            <span style="font-size: 48px;">🔐</span>
+          </div>
+          <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Reset Your Password</h2>
+          <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
+            Use the verification code below to reset your password and secure your account.
+          </p>
+        </div>
 
-                  <!-- OTP Code Box -->
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="center">
-                        <table cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #FEF9C3 0%, #FEF08A 100%); border-radius: 16px; border: 3px solid #FBBF24; padding: 30px; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
-                          <tr>
-                            <td align="center" style="padding-bottom: 12px;">
-                              <p style="margin: 0; color: #92400E; font-size: 16px; font-weight: 600;">Your Reset Code:</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td align="center">
-                              <span style="font-size: 40px; font-weight: 800; color: #D97706; letter-spacing: 12px; font-family: 'Courier New', monospace; text-shadow: 0 2px 4px rgba(217, 119, 6, 0.1);">
-                                ${otp}
-                              </span>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
+        <!-- OTP Code Section -->
+        <div style="text-align: center; margin: 30px 0;">
+          <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 16px; padding: 30px; margin: 0 auto; border: 3px solid #f59e0b; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
+            <p style="color: #1e3a8a; font-size: 16px; margin: 0 0 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Your Reset Code:</p>
+            <span style="font-size: 36px; font-weight: bold; color: #1e3a8a; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+              ${otp}
+            </span>
+          </div>
+        </div>
 
-                  <!-- Warning Box -->
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
-                    <tr>
-                      <td style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #FBBF24;">
-                        <p style="margin: 0 0 12px 0; color: #92400E; font-size: 16px; font-weight: 700;">⚠️ Security Alert</p>
-                        <p style="margin: 0; color: #92400E; font-size: 14px; line-height: 1.8; font-weight: 500;">
-                          • This code expires in <strong>5 minutes</strong><br>
-                          • Only use this code if you requested a password reset<br>
-                          • Never share this code with anyone<br>
-                          • If you didn't request this, secure your account immediately
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
+        <!-- Warning Section -->
+        <div style="background: #fffbeb; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #f59e0b;">
+          <p style="color: #92400e; font-size: 16px; margin: 0 0 10px; font-weight: 700;">⚠️ Security Alert</p>
+          <p style="color: #92400e; font-size: 14px; margin: 0; line-height: 1.8; font-weight: 500;">
+            • This code expires in <strong style="color: #f59e0b;">5 minutes</strong><br>
+            • Only use this code if you requested a password reset<br>
+            • Never share this code with anyone<br>
+            • If you didn't request this, please secure your account immediately
+          </p>
+        </div>
 
-                  <!-- Footer Note -->
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
-                    <tr>
-                      <td align="center">
-                        <p style="margin: 0; color: #94A3B8; font-size: 14px; line-height: 1.6;">
-                          If you didn't request a password reset, please ignore this email<br>or contact support if you're concerned about your account security.
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+        <div style="text-align: center; margin-top: 30px;">
+          <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0;">
+            If you didn't request a password reset, please ignore this email or contact support if you're concerned about your account security.
+          </p>
+        </div>
+      </div>
 
-              <!-- Footer -->
-              <tr>
-                <td style="background: linear-gradient(135deg, #F8FAFC 0%, #FEF9C3 100%); padding: 25px 40px; text-align: center; border-top: 1px solid #E2E8F0;">
-                  <p style="margin: 0; color: #64748B; font-size: 13px;">
-                    © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
-                  </p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </body>
-    </html>
+      <!-- Footer Section -->
+      <div style="background: #f8fafc; padding: 25px; text-align: center; border-top: 2px solid #e2e8f0;">
+        <p style="color: #64748b; font-size: 12px; margin: 0; font-weight: 500;">
+          © ${new Date().getFullYear()} TriVoca Entry Level. All rights reserved.
+        </p>
+      </div>
+    </div>
   `;
 }
 
@@ -335,10 +171,14 @@ app.post("/send-otp", async (req, res) => {
       return res.status(400).json({ error: "Email is required" });
     }
 
+    // Validate type parameter
     const otpType = type === 'reset' ? 'reset' : 'registration';
+
+    // Generate 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Store OTP with expiration (5 minutes)
     const expiresAt = Date.now() + 5 * 60 * 1000;
-    
     otpStore.set(email.toLowerCase(), {
       otp: otp,
       expiresAt: expiresAt,
@@ -348,28 +188,24 @@ app.post("/send-otp", async (req, res) => {
 
     console.log(`OTP for ${email} (${otpType}): ${otp}`);
 
+    // Get appropriate email template and subject based on type
     const htmlTemplate = otpType === 'reset' 
       ? getPasswordResetEmailTemplate(otp)
       : getRegistrationEmailTemplate(otp);
 
     const subject = otpType === 'reset'
       ? "Password Reset - Verification Code"
-      : "Welcome to Trivoca - Verify Your Email";
+      : "Welcome to TriVoca - Verify Your Email";
 
+    // Email options
     const mailOptions = {
-      from: `"Trivoca" <${process.env.SMTP_USER}>`,
+      from: `"TriVoca" <${process.env.SMTP_USER}>`,
       to: email,
       subject: subject,
-      attachments: [
-        {
-          filename: 'logo.png',
-          path: './logo.png',
-          cid: 'logo'
-        }
-      ],
       html: htmlTemplate,
     };
 
+    // Send email
     await transporter.sendMail(mailOptions);
 
     res.json({ 
@@ -408,6 +244,7 @@ app.post("/verify-otp", async (req, res) => {
       });
     }
 
+    // Check if OTP has expired
     if (Date.now() > storedData.expiresAt) {
       otpStore.delete(emailKey);
       return res.status(400).json({ 
@@ -416,6 +253,7 @@ app.post("/verify-otp", async (req, res) => {
       });
     }
 
+    // Check attempt limit (max 3 attempts)
     if (storedData.attempts >= 3) {
       otpStore.delete(emailKey);
       return res.status(400).json({ 
@@ -424,6 +262,7 @@ app.post("/verify-otp", async (req, res) => {
       });
     }
 
+    // Verify OTP
     if (storedData.otp !== otp.toString()) {
       storedData.attempts += 1;
       otpStore.set(emailKey, storedData);
@@ -434,12 +273,14 @@ app.post("/verify-otp", async (req, res) => {
       });
     }
 
+    // OTP is valid - mark as verified for password reset (5 minutes validity)
     verifiedOTPs.set(emailKey, {
       verified: true,
       timestamp: Date.now(),
       expiresAt: Date.now() + (5 * 60 * 1000)
     });
 
+    // Remove from OTP store
     otpStore.delete(emailKey);
     
     console.log(`OTP verified successfully for ${email}`);
@@ -471,6 +312,8 @@ app.post("/reset-password", async (req, res) => {
     }
 
     const emailKey = email.toLowerCase();
+
+    // Check if OTP was verified
     const verification = verifiedOTPs.get(emailKey);
     
     if (!verification) {
@@ -488,6 +331,7 @@ app.post("/reset-password", async (req, res) => {
       });
     }
 
+    // Validate password
     if (newPassword.length < 6) {
       return res.status(400).json({
         success: false,
@@ -495,6 +339,7 @@ app.post("/reset-password", async (req, res) => {
       });
     }
 
+    // Get user by email
     const userRecord = await admin.auth().getUserByEmail(email);
     
     if (!userRecord) {
@@ -504,10 +349,12 @@ app.post("/reset-password", async (req, res) => {
       });
     }
 
+    // Update password using Firebase Admin SDK
     await admin.auth().updateUser(userRecord.uid, {
       password: newPassword
     });
 
+    // Clean up verification
     verifiedOTPs.delete(emailKey);
 
     console.log(`Password reset successful for: ${email}`);
@@ -553,6 +400,7 @@ app.get("/health", (req, res) => {
 setInterval(() => {
   const now = Date.now();
   
+  // Clean expired OTPs
   for (const [email, data] of otpStore.entries()) {
     if (now > data.expiresAt) {
       otpStore.delete(email);
@@ -560,6 +408,7 @@ setInterval(() => {
     }
   }
   
+  // Clean expired verifications
   for (const [email, data] of verifiedOTPs.entries()) {
     if (now > data.expiresAt) {
       verifiedOTPs.delete(email);
