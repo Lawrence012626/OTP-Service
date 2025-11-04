@@ -101,65 +101,60 @@ function getRegistrationEmailTemplate(otp) {
 // Email template for PASSWORD RESET - MODERN DESIGN
 function getPasswordResetEmailTemplate(otp) {
   return `
-    <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; 
-                max-width: 600px; margin: 0 auto; background-color: #f9fafb; border-radius: 16px; 
-                overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08);">
-      
-      <!-- Header -->
-      <div style="background: linear-gradient(135deg, #2563eb, #1e3a8a); padding: 35px 25px; text-align: center;">
-        <img src="https://i.imgur.com/9Xe1XoX.png" alt="TriVoca Banner" 
-             style="max-width: 80%; height: auto; margin-bottom: 12px;">
-        <h1 style="color: #ffffff; font-size: 20px; font-weight: 500; margin: 0;">
-          Language Proficiency Exam Simulator
-        </h1>
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <!-- Header Section - Blue Background with Banner -->
+      <div style="padding: 40px 20px; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="TriVoca Banner" style="max-width: 85%; height: auto;">
+        </div>
+        <div style="text-align: center;">
+          <p style="color: white; font-size: 16px; margin: 0; font-weight: 400; letter-spacing: 0.5px;">Language Proficiency Exam Simulator</p>
+        </div>
       </div>
 
-      <!-- Main Content -->
-      <div style="padding: 40px 30px; background: #ffffff; border-radius: 0 0 16px 16px;">
+      <!-- Content Section -->
+      <div style="background: white; padding: 40px 30px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <div style="display: inline-flex; justify-content: center; align-items: center; 
-                      width: 80px; height: 80px; background: #eff6ff; border-radius: 50%; margin-bottom: 20px;">
-            <span style="font-size: 38px;">🔑</span>
+          <div style="display: inline-block; background: #dbeafe; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
+            <span style="font-size: 48px;">🔐</span>
           </div>
-          <h2 style="color: #1e3a8a; font-size: 26px; margin: 0 0 10px;">Password Reset Request</h2>
-          <p style="color: #6b7280; font-size: 15px; line-height: 1.6; margin: 0;">
+          <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Password Reset Request</h2>
+          <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
             We received a request to reset your password. Enter the code below to continue.
           </p>
         </div>
 
-        <!-- OTP Section -->
-        <div style="background: #f0f9ff; border: 2px solid #2563eb; border-radius: 14px; 
-                    padding: 25px; text-align: center; margin: 25px 0;">
-          <p style="color: #1e3a8a; font-weight: 600; text-transform: uppercase; margin: 0 0 8px;">
-            Verification Code
-          </p>
-          <span style="font-size: 40px; font-weight: bold; letter-spacing: 10px; 
-                       color: #2563eb; font-family: 'Courier New', monospace;">
-            ${otp}
-          </span>
+        <!-- OTP Code Section -->
+        <div style="text-align: center; margin: 30px 0;">
+          <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 16px; padding: 30px; margin: 0 auto; border: 3px solid #1e3a8a; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);">
+            <p style="color: #1e3a8a; font-size: 16px; margin: 0 0 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Your Verification Code:</p>
+            <span style="font-size: 36px; font-weight: bold; color: #f59e0b; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+              ${otp}
+            </span>
+          </div>
         </div>
 
         <!-- Security Warning -->
-        <div style="background: #fff7ed; border-left: 4px solid #f59e0b; border-radius: 10px; 
-                    padding: 18px 20px; margin-top: 25px;">
-          <p style="color: #92400e; font-weight: 700; font-size: 15px; margin: 0 0 6px;">⚠️ Security Notice</p>
-          <p style="color: #92400e; font-size: 14px; margin: 0; line-height: 1.8;">
-            • This code expires in <strong style="color:#f59e0b;">5 minutes</strong><br>
-            • Only use this code if you requested a password reset<br>
-            • Never share this code with anyone<br>
-            • If you didn't request this, please secure your account immediately
+        <div style="background: #fff7ed; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #f59e0b;">
+          <p style="color: #92400e; font-size: 15px; margin: 0 0 10px; font-weight: 700;">⚠️ Security Notice</p>
+          <p style="color: #92400e; font-size: 14px; margin: 0; line-height: 1.8; font-weight: 500;">
+            ✓ Code expires in <strong style="color: #f59e0b;">5 minutes</strong><br>
+            ✓ Only use this code if you requested a password reset<br>
+            ✓ Never share this code with anyone<br>
+            ✓ If you didn't request this, please secure your account immediately
           </p>
         </div>
 
-        <!-- Footer Note -->
-        <p style="text-align: center; color: #9ca3af; font-size: 13px; margin-top: 30px; line-height: 1.6;">
-          Didn’t request a password reset? You can safely ignore this email or contact support for help.
-        </p>
+        <div style="text-align: center; margin-top: 30px;">
+          <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0;">
+            Didn't request a password reset? You can safely ignore this email.
+          </p>
+        </div>
       </div>
 
-      <!-- Footer -->
-      <div style="background: #f3f4f6; text-align: center; padding: 20px; border-top: 1px solid #e5e7eb;">
-        <p style="color: #6b7280; font-size: 12px; margin: 0;">
+      <!-- Footer Section -->
+      <div style="background: #f8fafc; padding: 25px; text-align: center; border-top: 2px solid #e2e8f0;">
+        <p style="color: #64748b; font-size: 12px; margin: 0; font-weight: 500;">
           © ${new Date().getFullYear()} TriVoca Entry Level. All rights reserved.
         </p>
       </div>
