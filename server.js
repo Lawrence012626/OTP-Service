@@ -36,14 +36,153 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// API route to send OTP
+// Email template for REGISTRATION
+function getRegistrationEmailTemplate(otp) {
+  return `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
+      <!-- Header Section -->
+      <div style="padding: 40px 20px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <!-- Logo and Title Side by Side -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
+          <img src="cid:logo" alt="Trivoca Logo" style="height: 60px; width: auto;">
+          <div style="text-align: left;">
+            <h1 style="color: white; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1;">Trivoca Entry</h1>
+            <h1 style="color: white; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1;">Level</h1>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 16px; margin: 0; font-weight: 400;">Language Proficiency Exam Simulator</p>
+        </div>
+      </div>
+
+      <!-- Content Section -->
+      <div style="background: white; padding: 40px 30px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <div style="display: inline-block; background: #EEF2FF; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
+            <span style="font-size: 48px;">🎉</span>
+          </div>
+          <h2 style="color: #1F2937; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Welcome to Trivoca!</h2>
+          <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
+            You're just one step away from starting your language proficiency journey.
+          </p>
+        </div>
+
+        <!-- OTP Code Section -->
+        <div style="text-align: center; margin: 30px 0;">
+          <div style="background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%); border-radius: 12px; padding: 25px; margin: 0 auto; border: 2px solid #667eea;">
+            <p style="color: #374151; font-size: 16px; margin: 0 0 10px; font-weight: 600;">Your Verification Code:</p>
+            <span style="font-size: 32px; font-weight: bold; color: #667eea; letter-spacing: 6px; font-family: 'Courier New', monospace;">
+              ${otp}
+            </span>
+          </div>
+        </div>
+
+        <!-- Info Section -->
+        <div style="background: #F0FDF4; border-radius: 8px; padding: 20px; margin: 30px 0; border-left: 4px solid #10B981;">
+          <p style="color: #065F46; font-size: 14px; margin: 0; line-height: 1.6;">
+            ✓ Code expires in <strong>5 minutes</strong><br>
+            ✓ Use this code to complete your registration<br>
+            ✓ Never share this code with anyone
+          </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+          <p style="color: #9CA3AF; font-size: 14px; line-height: 1.6; margin: 0;">
+            If you didn't create this account, please ignore this email.
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer Section -->
+      <div style="background: #F8FAFC; padding: 20px; text-align: center; border-top: 1px solid #E5E7EB;">
+        <p style="color: #6B7280; font-size: 12px; margin: 0;">
+          © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
+        </p>
+      </div>
+    </div>
+  `;
+}
+
+// Email template for PASSWORD RESET
+function getPasswordResetEmailTemplate(otp) {
+  return `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
+      <!-- Header Section -->
+      <div style="padding: 40px 20px 30px; background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);">
+        <!-- Logo and Title Side by Side -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
+          <img src="cid:logo" alt="Trivoca Logo" style="height: 60px; width: auto;">
+          <div style="text-align: left;">
+            <h1 style="color: white; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1;">Trivoca Entry</h1>
+            <h1 style="color: white; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1;">Level</h1>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 16px; margin: 0; font-weight: 400;">Language Proficiency Exam Simulator</p>
+        </div>
+      </div>
+
+      <!-- Content Section -->
+      <div style="background: white; padding: 40px 30px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <div style="display: inline-block; background: #FEE2E2; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
+            <span style="font-size: 48px;">🔐</span>
+          </div>
+          <h2 style="color: #1F2937; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Password Reset Request</h2>
+          <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
+            We received a request to reset your password. Use the code below to proceed.
+          </p>
+        </div>
+
+        <!-- OTP Code Section -->
+        <div style="text-align: center; margin: 30px 0;">
+          <div style="background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%); border-radius: 12px; padding: 25px; margin: 0 auto; border: 2px solid #DC2626;">
+            <p style="color: #374151; font-size: 16px; margin: 0 0 10px; font-weight: 600;">Your Reset Code:</p>
+            <span style="font-size: 32px; font-weight: bold; color: #DC2626; letter-spacing: 6px; font-family: 'Courier New', monospace;">
+              ${otp}
+            </span>
+          </div>
+        </div>
+
+        <!-- Warning Section -->
+        <div style="background: #FEF3C7; border-radius: 8px; padding: 20px; margin: 30px 0; border-left: 4px solid #F59E0B;">
+          <p style="color: #92400E; font-size: 16px; margin: 0 0 8px; font-weight: 600;">⚠️ Security Alert</p>
+          <p style="color: #92400E; font-size: 14px; margin: 0; line-height: 1.6;">
+            • This code expires in <strong>5 minutes</strong><br>
+            • Only use this code if you requested a password reset<br>
+            • Never share this code with anyone<br>
+            • If you didn't request this, please secure your account immediately
+          </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+          <p style="color: #9CA3AF; font-size: 14px; line-height: 1.6; margin: 0;">
+            If you didn't request a password reset, please ignore this email or contact support if you're concerned about your account security.
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer Section -->
+      <div style="background: #F8FAFC; padding: 20px; text-align: center; border-top: 1px solid #E5E7EB;">
+        <p style="color: #6B7280; font-size: 12px; margin: 0;">
+          © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
+        </p>
+      </div>
+    </div>
+  `;
+}
+
+// API route to send OTP (UPDATED)
 app.post("/send-otp", async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, type } = req.body; // Added 'type' parameter
 
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
     }
+
+    // Validate type parameter
+    const otpType = type === 'reset' ? 'reset' : 'registration';
 
     // Generate 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -53,82 +192,35 @@ app.post("/send-otp", async (req, res) => {
     otpStore.set(email.toLowerCase(), {
       otp: otp,
       expiresAt: expiresAt,
-      attempts: 0
+      attempts: 0,
+      type: otpType // Store the type
     });
 
-    console.log(`OTP for ${email}: ${otp}`); // For debugging - remove in production
+    console.log(`OTP for ${email} (${otpType}): ${otp}`); // For debugging - remove in production
+
+    // Get appropriate email template based on type
+    const htmlTemplate = otpType === 'reset' 
+      ? getPasswordResetEmailTemplate(otp)
+      : getRegistrationEmailTemplate(otp);
+
+    // Get appropriate subject based on type
+    const subject = otpType === 'reset'
+      ? "Password Reset - Verification Code"
+      : "Welcome to Trivoca - Verify Your Email";
 
     // Email options
     const mailOptions = {
       from: `"Trivoca" <${process.env.SMTP_USER}>`,
       to: email,
-      subject: "Your One-Time Password (OTP) Code",
+      subject: subject,
       attachments: [
         {
           filename: 'logo.png',
-          path: './logo.png', // Path to your logo file
-          cid: 'logo' // Content ID for embedding in HTML
+          path: './logo.png',
+          cid: 'logo'
         }
       ],
-      html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
-          <!-- Header Section -->
-          <div style="padding: 40px 20px 30px; background: #F8FAFC;">
-            <!-- Logo and Title Side by Side -->
-            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
-              <img src="cid:logo" alt="Trivoca Logo" style="height: 60px; width: auto;">
-              <div style="text-align: left;">
-                <h1 style="color: #1F2937; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1;">Trivoca Entry</h1>
-                <h1 style="color: #1F2937; font-size: 32px; font-weight: bold; margin: 0; line-height: 1.1;">Level</h1>
-              </div>
-            </div>
-            <div style="text-align: center;">
-              <p style="color: #6B7280; font-size: 16px; margin: 0; font-weight: 400;">Language Proficiency Exam Simulator</p>
-            </div>
-          </div>
-
-          <!-- Content Section -->
-          <div style="background: white; padding: 40px 30px;">
-            <div style="text-align: center; margin-bottom: 30px;">
-              <h2 style="color: #1F2937; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Verify Your Email</h2>
-              <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
-                Please use the verification code below to complete your registration.
-              </p>
-            </div>
-
-            <!-- OTP Code Section -->
-            <div style="text-align: center; margin: 30px 0;">
-              <div style="background: #F8FAFC; border-radius: 8px; padding: 25px; margin: 0 auto; border: 1px solid #E5E7EB;">
-                <p style="color: #374151; font-size: 16px; margin: 0 0 10px; font-weight: 600;">Verification Code:</p>
-                <span style="font-size: 28px; font-weight: bold; color: #1F2937; letter-spacing: 4px; font-family: 'Courier New', monospace;">
-                  ${otp}
-                </span>
-              </div>
-            </div>
-
-            <!-- Important Note Section -->
-            <div style="background: #FEF3C7; border-radius: 8px; padding: 20px; margin: 30px 0; border: 1px solid #FDE68A;">
-              <p style="color: #92400E; font-size: 16px; margin: 0 0 8px; font-weight: 600;">Important Note</p>
-              <p style="color: #92400E; font-size: 14px; margin: 0; line-height: 1.6;">
-                This verification code is valid for <strong>5 Minutes</strong>. Do not share this code with anyone for security reasons.
-              </p>
-            </div>
-
-            <div style="text-align: center; margin-top: 30px;">
-              <p style="color: #9CA3AF; font-size: 14px; line-height: 1.6; margin: 0;">
-                If you didn't request this verification code, please ignore this email.
-              </p>
-            </div>
-          </div>
-
-          <!-- Footer Section -->
-          <div style="background: #F8FAFC; padding: 20px; text-align: center; border-top: 1px solid #E5E7EB;">
-            <p style="color: #6B7280; font-size: 12px; margin: 0;">
-              © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
-            </p>
-          </div>
-        </div>
-      `,
+      html: htmlTemplate,
     };
 
     // Send email
@@ -136,7 +228,8 @@ app.post("/send-otp", async (req, res) => {
 
     res.json({ 
       success: true, 
-      message: "OTP sent successfully"
+      message: `OTP sent successfully for ${otpType}`,
+      type: otpType
     }); 
   } catch (error) {
     console.error("Email sending error:", error);
@@ -147,7 +240,7 @@ app.post("/send-otp", async (req, res) => {
   }
 });
 
-// API route to verify OTP (UPDATED)
+// API route to verify OTP
 app.post("/verify-otp", async (req, res) => {
   try {
     const { email, otp } = req.body;
@@ -224,7 +317,7 @@ app.post("/verify-otp", async (req, res) => {
   }
 });
 
-// NEW: Reset password endpoint
+// Reset password endpoint
 app.post("/reset-password", async (req, res) => {
   try {
     const { email, newPassword } = req.body;
@@ -314,7 +407,7 @@ app.get("/health", (req, res) => {
     message: "OTP service is running",
     timestamp: new Date().toISOString(),
     endpoints: {
-      sendOTP: 'POST /send-otp',
+      sendOTP: 'POST /send-otp (with type: "registration" or "reset")',
       verifyOTP: 'POST /verify-otp',
       resetPassword: 'POST /reset-password'
     }
