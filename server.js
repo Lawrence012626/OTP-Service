@@ -36,13 +36,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Email template for REGISTRATION
+// Email template for REGISTRATION - WELCOME MESSAGE
 function getRegistrationEmailTemplate(otp) {
   return `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
-      <!-- Header Section -->
+      <!-- Header Section - Purple Gradient -->
       <div style="padding: 40px 20px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-        <!-- Logo and Title Side by Side -->
         <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
           <img src="cid:logo" alt="Trivoca Logo" style="height: 60px; width: auto;">
           <div style="text-align: left;">
@@ -103,13 +102,12 @@ function getRegistrationEmailTemplate(otp) {
   `;
 }
 
-// Email template for PASSWORD RESET
+// Email template for PASSWORD RESET - SECURITY MESSAGE
 function getPasswordResetEmailTemplate(otp) {
   return `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
-      <!-- Header Section -->
+      <!-- Header Section - Red Gradient -->
       <div style="padding: 40px 20px 30px; background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);">
-        <!-- Logo and Title Side by Side -->
         <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
           <img src="cid:logo" alt="Trivoca Logo" style="height: 60px; width: auto;">
           <div style="text-align: left;">
@@ -172,10 +170,10 @@ function getPasswordResetEmailTemplate(otp) {
   `;
 }
 
-// API route to send OTP (UPDATED)
+// API route to send OTP
 app.post("/send-otp", async (req, res) => {
   try {
-    const { email, type } = req.body; // Added 'type' parameter
+    const { email, type } = req.body;
 
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
@@ -188,22 +186,21 @@ app.post("/send-otp", async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     // Store OTP with expiration (5 minutes)
-    const expiresAt = Date.now() + 5 * 60 * 1000; // 5 minutes from now
+    const expiresAt = Date.now() + 5 * 60 * 1000;
     otpStore.set(email.toLowerCase(), {
       otp: otp,
       expiresAt: expiresAt,
       attempts: 0,
-      type: otpType // Store the type
+      type: otpType
     });
 
-    console.log(`OTP for ${email} (${otpType}): ${otp}`); // For debugging - remove in production
+    console.log(`OTP for ${email} (${otpType}): ${otp}`);
 
-    // Get appropriate email template based on type
+    // Get appropriate email template and subject based on type
     const htmlTemplate = otpType === 'reset' 
       ? getPasswordResetEmailTemplate(otp)
       : getRegistrationEmailTemplate(otp);
 
-    // Get appropriate subject based on type
     const subject = otpType === 'reset'
       ? "Password Reset - Verification Code"
       : "Welcome to Trivoca - Verify Your Email";
