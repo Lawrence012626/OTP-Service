@@ -53,22 +53,10 @@ function getRegistrationEmailTemplate(otp) {
             <!-- Main Container -->
             <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 100%;">
               
-              <!-- Header -->
+              <!-- Header with New Banner Image -->
               <tr>
-                <td style="background: #1e40af; padding: 40px; text-align: center;">
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="center">
-                        <img src="cid:logo" alt="Trivoca Logo" style="width: 60px; height: 60px; display: block; margin-bottom: 16px;">
-                        <h1 style="margin: 0; padding: 0; color: white; font-size: 28px; font-weight: 700; line-height: 1.2;">
-                          Trivoca Entry Level
-                        </h1>
-                        <p style="margin: 8px 0 0 0; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 500;">
-                          Language Proficiency Exam Simulator
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
+                <td style="padding: 0; text-align: center;">
+                  <img src="cid:header" alt="TriUoco Header" style="width: 100%; height: auto; display: block;">
                 </td>
               </tr>
 
@@ -79,7 +67,7 @@ function getRegistrationEmailTemplate(otp) {
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td align="center" style="padding-bottom: 32px;">
-                        <h2 style="margin: 0; color: #1e293b; font-size: 24px; font-weight: 600;">Welcome to Trivoca!</h2>
+                        <h2 style="margin: 0; color: #1e293b; font-size: 24px; font-weight: 600;">Welcome to TriUoco!</h2>
                         <p style="margin: 12px 0 0 0; color: #64748b; font-size: 16px; line-height: 1.5;">
                           You're just one step away from starting your language proficiency journey.
                         </p>
@@ -107,7 +95,7 @@ function getRegistrationEmailTemplate(otp) {
                       <td style="background: #f1f5f9; border-radius: 8px; padding: 24px;">
                         <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">
                           <strong>Important:</strong><br>
-                          • Code expires in <strong style="color: #dc2626;">5 minutes</strong><br>
+                          • Code expires in <strong style="color: #d97706;">5 minutes</strong><br>
                           • Use this code to complete your registration<br>
                           • Never share this code with anyone
                         </p>
@@ -130,9 +118,9 @@ function getRegistrationEmailTemplate(otp) {
 
               <!-- Footer -->
               <tr>
-                <td style="background: #f8fafc; padding: 24px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+                <td style="background: #fef9c3; padding: 24px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
                   <p style="margin: 0; color: #64748b; font-size: 12px;">
-                    © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
+                    © ${new Date().getFullYear()} TriUoca. All rights reserved.
                   </p>
                 </td>
               </tr>
@@ -153,7 +141,7 @@ function getPasswordResetEmailTemplate(otp) {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Reset Your Password - Trivoca</title>
+      <title>Reset Your Password - TriUoco</title>
     </head>
     <body style="margin: 0; padding: 0; background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
       <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 20px;">
@@ -162,22 +150,10 @@ function getPasswordResetEmailTemplate(otp) {
             <!-- Main Container -->
             <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); overflow: hidden; max-width: 100%;">
               
-              <!-- Header -->
+              <!-- Header with New Banner Image -->
               <tr>
-                <td style="background: #dc2626; padding: 40px; text-align: center;">
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="center">
-                        <img src="cid:logo" alt="Trivoca Logo" style="width: 60px; height: 60px; display: block; margin-bottom: 16px;">
-                        <h1 style="margin: 0; padding: 0; color: white; font-size: 28px; font-weight: 700; line-height: 1.2;">
-                          Password Reset
-                        </h1>
-                        <p style="margin: 8px 0 0 0; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 500;">
-                          Trivoca Entry Level
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
+                <td style="padding: 0; text-align: center;">
+                  <img src="cid:header" alt="TriUoco Header" style="width: 100%; height: auto; display: block;">
                 </td>
               </tr>
 
@@ -200,9 +176,9 @@ function getPasswordResetEmailTemplate(otp) {
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td align="center" style="padding-bottom: 32px;">
-                        <div style="background: #fef2f2; border: 2px solid #fecaca; border-radius: 12px; padding: 32px; text-align: center;">
-                          <p style="margin: 0 0 16px 0; color: #dc2626; font-size: 16px; font-weight: 500;">Your Reset Code:</p>
-                          <div style="font-size: 40px; font-weight: 700; color: #dc2626; letter-spacing: 8px; font-family: 'Courier New', monospace; padding: 8px 0;">
+                        <div style="background: #fef9c3; border: 2px solid #fbbf24; border-radius: 12px; padding: 32px; text-align: center;">
+                          <p style="margin: 0 0 16px 0; color: #d97706; font-size: 16px; font-weight: 500;">Your Reset Code:</p>
+                          <div style="font-size: 40px; font-weight: 700; color: #d97706; letter-spacing: 8px; font-family: 'Courier New', monospace; padding: 8px 0;">
                             ${otp}
                           </div>
                         </div>
@@ -213,9 +189,9 @@ function getPasswordResetEmailTemplate(otp) {
                   <!-- Warning Box -->
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td style="background: #fef2f2; border-radius: 8px; padding: 24px;">
-                        <p style="margin: 0 0 12px 0; color: #dc2626; font-size: 16px; font-weight: 600;">Security Notice</p>
-                        <p style="margin: 0; color: #991b1b; font-size: 14px; line-height: 1.6;">
+                      <td style="background: #fef9c3; border-radius: 8px; padding: 24px;">
+                        <p style="margin: 0 0 12px 0; color: #d97706; font-size: 16px; font-weight: 600;">Security Notice</p>
+                        <p style="margin: 0; color: #92400e; font-size: 14px; line-height: 1.6;">
                           • This code expires in <strong>5 minutes</strong><br>
                           • Only use if you requested a password reset<br>
                           • Never share this code with anyone<br>
@@ -240,9 +216,9 @@ function getPasswordResetEmailTemplate(otp) {
 
               <!-- Footer -->
               <tr>
-                <td style="background: #f8fafc; padding: 24px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+                <td style="background: #fef9c3; padding: 24px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
                   <p style="margin: 0; color: #64748b; font-size: 12px;">
-                    © ${new Date().getFullYear()} Trivoca Entry Level. All rights reserved.
+                    © ${new Date().getFullYear()} TriUoco. All rights reserved.
                   </p>
                 </td>
               </tr>
@@ -283,17 +259,17 @@ app.post("/send-otp", async (req, res) => {
 
     const subject = otpType === 'reset'
       ? "Password Reset - Verification Code"
-      : "Welcome to Trivoca - Verify Your Email";
+      : "Welcome to TriUoco - Verify Your Email";
 
     const mailOptions = {
-      from: `"Trivoca" <${process.env.SMTP_USER}>`,
+      from: `"TriUoco" <${process.env.SMTP_USER}>`,
       to: email,
       subject: subject,
       attachments: [
         {
-          filename: 'logo.png',
-          path: './logo.png',
-          cid: 'logo'
+          filename: 'header.png',
+          path: './Student Contact Information Google Forms Header in Colorful Organic Style.png',
+          cid: 'header'
         }
       ],
       html: htmlTemplate,
