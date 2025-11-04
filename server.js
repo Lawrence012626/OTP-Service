@@ -126,9 +126,9 @@ function getPasswordResetEmailTemplate(otp) {
           <div style="display: inline-block; background: #FEE2E2; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
             <span style="font-size: 48px;">🔐</span>
           </div>
-          <h2 style="color: #DC2626; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Password Reset Request</h2>
+          <h2 style="color: #DC2626; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Reset Your Password</h2>
           <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
-            We received a request to reset your password. Use the code below to proceed.
+            Use the verification code below to reset your password and secure your account.
           </p>
         </div>
 
@@ -194,7 +194,7 @@ app.post("/send-otp", async (req, res) => {
       type: otpType
     });
 
-    console.log(OTP for ${email} (${otpType}): ${otp});
+    console.log(`OTP for ${email} (${otpType}): ${otp}`);
 
     // Get appropriate email template and subject based on type
     const htmlTemplate = otpType === 'reset' 
@@ -207,7 +207,7 @@ app.post("/send-otp", async (req, res) => {
 
     // Email options
     const mailOptions = {
-      from: "Trivoca" <${process.env.SMTP_USER}>,
+      from: `"Trivoca" <${process.env.SMTP_USER}>`,
       to: email,
       subject: subject,
       attachments: [
@@ -225,7 +225,7 @@ app.post("/send-otp", async (req, res) => {
 
     res.json({ 
       success: true, 
-      message: OTP sent successfully for ${otpType},
+      message: `OTP sent successfully for ${otpType}`,
       type: otpType
     }); 
   } catch (error) {
@@ -284,7 +284,7 @@ app.post("/verify-otp", async (req, res) => {
       
       return res.status(400).json({ 
         success: false,
-        message: Invalid OTP. ${3 - storedData.attempts} attempts remaining. 
+        message: `Invalid OTP. ${3 - storedData.attempts} attempts remaining.` 
       });
     }
 
@@ -298,7 +298,7 @@ app.post("/verify-otp", async (req, res) => {
     // Remove from OTP store
     otpStore.delete(emailKey);
     
-    console.log(OTP verified successfully for ${email});
+    console.log(`OTP verified successfully for ${email}`);
     
     res.json({ 
       success: true,
@@ -372,7 +372,7 @@ app.post("/reset-password", async (req, res) => {
     // Clean up verification
     verifiedOTPs.delete(emailKey);
 
-    console.log(Password reset successful for: ${email});
+    console.log(`Password reset successful for: ${email}`);
 
     res.json({
       success: true,
@@ -419,7 +419,7 @@ setInterval(() => {
   for (const [email, data] of otpStore.entries()) {
     if (now > data.expiresAt) {
       otpStore.delete(email);
-      console.log(Cleaned up expired OTP for ${email});
+      console.log(`Cleaned up expired OTP for ${email}`);
     }
   }
   
@@ -427,14 +427,14 @@ setInterval(() => {
   for (const [email, data] of verifiedOTPs.entries()) {
     if (now > data.expiresAt) {
       verifiedOTPs.delete(email);
-      console.log(Cleaned up expired verification for ${email});
+      console.log(`Cleaned up expired verification for ${email}`);
     }
   }
 }, 5 * 60 * 1000);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(🚀 Server running on port ${PORT});
-  console.log📧 SMTP configured for: ${process.env.SMTP_USER}`);
-  console.log🔥 Firebase Admin initialized`);
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📧 SMTP configured for: ${process.env.SMTP_USER}`);
+  console.log(`🔥 Firebase Admin initialized`);
 });
