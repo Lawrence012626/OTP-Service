@@ -39,161 +39,185 @@ const transporter = nodemailer.createTransport({
 // Email template for REGISTRATION - WELCOME MESSAGE
 function getRegistrationEmailTemplate(otp) {
   return `
-    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-      <!-- Header Section - Blue Background with Banner -->
-      <div style="padding: 50px 20px; background: #1d3c73;">
-        <div style="text-align: center; margin-bottom: 20px;">
-          <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="TriVoca Banner" style="max-width: 100%; height: auto;">
-        </div>
-        <div style="text-align: center;">
-          <p style="color: white; font-size: 16px; margin: 0; font-weight: 400; letter-spacing: 0.5px;">Language Proficiency Exam Simulator</p>
-        </div>
-      </div>
-
-      <!-- Content Section -->
-      <div style="background: white; padding: 40px 30px;">
-        <div style="text-align: center; margin-bottom: 30px;">
-          <div style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%); border-radius: 50%; width: 80px; height: 80px; line-height: 80px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);">
-            <span style="font-size: 40px; color: white;">&#10003;</span>
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #f3f4f6;">
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <!-- Header Section - Blue Background with Banner -->
+        <div style="padding: 50px 20px; background: #1d3c73;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="TriVoca Banner" style="max-width: 100%; height: auto;">
           </div>
-          <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Welcome to TriVoca!</h2>
-          <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
-            You're just one step away from starting your language proficiency journey.
-          </p>
-        </div>
-
-        <!-- OTP Code Section -->
-        <div style="text-align: center; margin: 30px 0;">
-          <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 16px; padding: 30px; margin: 0 auto; border: 3px solid #1e3a8a; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);">
-            <p style="color: #1e3a8a; font-size: 16px; margin: 0 0 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Your Verification Code:</p>
-            <span style="font-size: 36px; font-weight: bold; color: #f59e0b; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
-              ${otp}
-            </span>
+          <div style="text-align: center;">
+            <p style="color: white; font-size: 16px; margin: 0; font-weight: 400; letter-spacing: 0.5px;">Language Proficiency Exam Simulator</p>
           </div>
         </div>
 
-        <!-- Info Section -->
-        <div style="background: #eff6ff; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #3b82f6;">
-          <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tr>
-              <td style="padding: 5px 0;">
-                <span style="display: inline-block; width: 20px; height: 20px; background: #10b981; border-radius: 50%; text-align: center; line-height: 20px; color: white; font-size: 12px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
-                <span style="color: #1e3a8a; font-size: 14px; font-weight: 500; vertical-align: middle;">Code expires in <strong style="color: #f59e0b;">5 minutes</strong></span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 5px 0;">
-                <span style="display: inline-block; width: 20px; height: 20px; background: #10b981; border-radius: 50%; text-align: center; line-height: 20px; color: white; font-size: 12px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
-                <span style="color: #1e3a8a; font-size: 14px; font-weight: 500; vertical-align: middle;">Use this code to complete your registration</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 5px 0;">
-                <span style="display: inline-block; width: 20px; height: 20px; background: #10b981; border-radius: 50%; text-align: center; line-height: 20px; color: white; font-size: 12px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
-                <span style="color: #1e3a8a; font-size: 14px; font-weight: 500; vertical-align: middle;">Never share this code with anyone</span>
-              </td>
-            </tr>
-          </table>
+        <!-- Content Section -->
+        <div style="background: white; padding: 40px 30px;">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <div style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%); border-radius: 50%; width: 90px; height: 90px; line-height: 90px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);">
+              <i class="fas fa-user-check" style="font-size: 45px; color: white;"></i>
+            </div>
+            <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Welcome to TriVoca!</h2>
+            <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
+              You're just one step away from starting your language proficiency journey.
+            </p>
+          </div>
+
+          <!-- OTP Code Section -->
+          <div style="text-align: center; margin: 30px 0;">
+            <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 16px; padding: 30px; margin: 0 auto; border: 3px solid #1e3a8a; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);">
+              <p style="color: #1e3a8a; font-size: 16px; margin: 0 0 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+                <i class="fas fa-shield-alt" style="margin-right: 8px;"></i>Your Verification Code:
+              </p>
+              <span style="font-size: 36px; font-weight: bold; color: #f59e0b; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                ${otp}
+              </span>
+            </div>
+          </div>
+
+          <!-- Info Section -->
+          <div style="background: #eff6ff; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #3b82f6;">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+              <tr>
+                <td style="padding: 8px 0;">
+                  <i class="fas fa-clock" style="color: #f59e0b; font-size: 18px; margin-right: 12px; vertical-align: middle;"></i>
+                  <span style="color: #1e3a8a; font-size: 14px; font-weight: 500; vertical-align: middle;">Code expires in <strong style="color: #f59e0b;">5 minutes</strong></span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0;">
+                  <i class="fas fa-check-circle" style="color: #10b981; font-size: 18px; margin-right: 12px; vertical-align: middle;"></i>
+                  <span style="color: #1e3a8a; font-size: 14px; font-weight: 500; vertical-align: middle;">Use this code to complete your registration</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0;">
+                  <i class="fas fa-lock" style="color: #ef4444; font-size: 18px; margin-right: 12px; vertical-align: middle;"></i>
+                  <span style="color: #1e3a8a; font-size: 14px; font-weight: 500; vertical-align: middle;">Never share this code with anyone</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div style="text-align: center; margin-top: 30px;">
+            <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0;">
+              <i class="fas fa-info-circle" style="margin-right: 5px;"></i>
+              If you didn't create this account, please ignore this email.
+            </p>
+          </div>
         </div>
 
-        <div style="text-align: center; margin-top: 30px;">
-          <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0;">
-            If you didn't create this account, please ignore this email.
+        <!-- Footer Section -->
+        <div style="background: #f8fafc; padding: 25px; text-align: center; border-top: 2px solid #e2e8f0;">
+          <p style="color: #64748b; font-size: 12px; margin: 0; font-weight: 500;">
+            <i class="fas fa-copyright" style="margin-right: 5px;"></i>
+            ${new Date().getFullYear()} TriVoca Entry Level. All rights reserved.
           </p>
         </div>
       </div>
-
-      <!-- Footer Section -->
-      <div style="background: #f8fafc; padding: 25px; text-align: center; border-top: 2px solid #e2e8f0;">
-        <p style="color: #64748b; font-size: 12px; margin: 0; font-weight: 500;">
-          © ${new Date().getFullYear()} TriVoca Entry Level. All rights reserved.
-        </p>
-      </div>
-    </div>
+    </body>
+    </html>
   `;
 }
 
 // Email template for PASSWORD RESET - MODERN DESIGN
 function getPasswordResetEmailTemplate(otp) {
   return `
-    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-      <!-- Header Section - Blue Background with Banner -->
-      <div style="padding: 50px 20px; background: #1d3c73;">
-        <div style="text-align: center; margin-bottom: 20px;">
-          <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="TriVoca Banner" style="max-width: 100%; height: auto;">
-        </div>
-      </div>
-
-      <!-- Content Section -->
-      <div style="background: white; padding: 40px 30px;">
-        <div style="text-align: center; margin-bottom: 30px;">
-          <div style="display: inline-block; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); border-radius: 50%; width: 80px; height: 80px; line-height: 80px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
-            <span style="font-size: 40px; color: white;">&#128274;</span>
-          </div>
-          <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Password Reset Request</h2>
-          <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
-            We received a request to reset your password. Enter the code below to continue.
-          </p>
-        </div>
-
-        <!-- OTP Code Section -->
-        <div style="text-align: center; margin: 30px 0;">
-          <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 16px; padding: 30px; margin: 0 auto; border: 3px solid #1e3a8a; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);">
-            <p style="color: #1e3a8a; font-size: 16px; margin: 0 0 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Your Verification Code:</p>
-            <span style="font-size: 36px; font-weight: bold; color: #f59e0b; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
-              ${otp}
-            </span>
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #f3f4f6;">
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <!-- Header Section - Blue Background with Banner -->
+        <div style="padding: 50px 20px; background: #1d3c73;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <img src="https://drive.google.com/uc?export=download&id=1ZalJhyMjDSewz6jWt2GaJYJcmuvIe7iO" alt="TriVoca Banner" style="max-width: 100%; height: auto;">
           </div>
         </div>
 
-        <!-- Security Warning -->
-        <div style="background: #fff7ed; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #f59e0b;">
-          <p style="color: #92400e; font-size: 15px; margin: 0 0 15px; font-weight: 700;">
-            <span style="display: inline-block; width: 24px; height: 24px; background: #f59e0b; border-radius: 50%; text-align: center; line-height: 24px; color: white; font-size: 16px; font-weight: bold; margin-right: 8px; vertical-align: middle;">!</span>
-            Security Notice
-          </p>
-          <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tr>
-              <td style="padding: 5px 0;">
-                <span style="display: inline-block; width: 18px; height: 18px; background: #10b981; border-radius: 50%; text-align: center; line-height: 18px; color: white; font-size: 11px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
-                <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">Code expires in <strong style="color: #f59e0b;">5 minutes</strong></span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 5px 0;">
-                <span style="display: inline-block; width: 18px; height: 18px; background: #10b981; border-radius: 50%; text-align: center; line-height: 18px; color: white; font-size: 11px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
-                <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">Only use this code if you requested a password reset</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 5px 0;">
-                <span style="display: inline-block; width: 18px; height: 18px; background: #10b981; border-radius: 50%; text-align: center; line-height: 18px; color: white; font-size: 11px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
-                <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">Never share this code with anyone</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 5px 0;">
-                <span style="display: inline-block; width: 18px; height: 18px; background: #10b981; border-radius: 50%; text-align: center; line-height: 18px; color: white; font-size: 11px; font-weight: bold; margin-right: 10px; vertical-align: middle;">&#10003;</span>
-                <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">If you didn't request this, please secure your account immediately</span>
-              </td>
-            </tr>
-          </table>
+        <!-- Content Section -->
+        <div style="background: white; padding: 40px 30px;">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <div style="display: inline-block; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); border-radius: 50%; width: 90px; height: 90px; line-height: 90px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
+              <i class="fas fa-key" style="font-size: 45px; color: white;"></i>
+            </div>
+            <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Password Reset Request</h2>
+            <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
+              We received a request to reset your password. Enter the code below to continue.
+            </p>
+          </div>
+
+          <!-- OTP Code Section -->
+          <div style="text-align: center; margin: 30px 0;">
+            <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 16px; padding: 30px; margin: 0 auto; border: 3px solid #1e3a8a; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);">
+              <p style="color: #1e3a8a; font-size: 16px; margin: 0 0 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+                <i class="fas fa-shield-alt" style="margin-right: 8px;"></i>Your Verification Code:
+              </p>
+              <span style="font-size: 36px; font-weight: bold; color: #f59e0b; letter-spacing: 8px; font-family: 'Courier New', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                ${otp}
+              </span>
+            </div>
+          </div>
+
+          <!-- Security Warning -->
+          <div style="background: #fff7ed; border-radius: 12px; padding: 20px; margin: 30px 0; border-left: 4px solid #f59e0b;">
+            <p style="color: #92400e; font-size: 15px; margin: 0 0 15px; font-weight: 700;">
+              <i class="fas fa-exclamation-triangle" style="color: #f59e0b; font-size: 20px; margin-right: 8px; vertical-align: middle;"></i>
+              Security Notice
+            </p>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+              <tr>
+                <td style="padding: 8px 0;">
+                  <i class="fas fa-clock" style="color: #f59e0b; font-size: 18px; margin-right: 12px; vertical-align: middle;"></i>
+                  <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">Code expires in <strong style="color: #f59e0b;">5 minutes</strong></span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0;">
+                  <i class="fas fa-user-shield" style="color: #10b981; font-size: 18px; margin-right: 12px; vertical-align: middle;"></i>
+                  <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">Only use this code if you requested a password reset</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0;">
+                  <i class="fas fa-lock" style="color: #ef4444; font-size: 18px; margin-right: 12px; vertical-align: middle;"></i>
+                  <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">Never share this code with anyone</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0;">
+                  <i class="fas fa-shield-virus" style="color: #dc2626; font-size: 18px; margin-right: 12px; vertical-align: middle;"></i>
+                  <span style="color: #92400e; font-size: 14px; font-weight: 500; vertical-align: middle;">If you didn't request this, please secure your account immediately</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div style="text-align: center; margin-top: 30px;">
+            <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0;">
+              <i class="fas fa-info-circle" style="margin-right: 5px;"></i>
+              Didn't request a password reset? You can safely ignore this email.
+            </p>
+          </div>
         </div>
 
-        <div style="text-align: center; margin-top: 30px;">
-          <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0;">
-            Didn't request a password reset? You can safely ignore this email.
+        <!-- Footer Section -->
+        <div style="background: #f8fafc; padding: 25px; text-align: center; border-top: 2px solid #e2e8f0;">
+          <p style="color: #64748b; font-size: 12px; margin: 0; font-weight: 500;">
+            <i class="fas fa-copyright" style="margin-right: 5px;"></i>
+            ${new Date().getFullYear()} TriVoca Entry Level. All rights reserved.
           </p>
         </div>
       </div>
-
-      <!-- Footer Section -->
-      <div style="background: #f8fafc; padding: 25px; text-align: center; border-top: 2px solid #e2e8f0;">
-        <p style="color: #64748b; font-size: 12px; margin: 0; font-weight: 500;">
-          © ${new Date().getFullYear()} TriVoca Entry Level. All rights reserved.
-        </p>
-      </div>
-    </div>
+    </body>
+    </html>
   `;
 }
 
@@ -446,7 +470,7 @@ setInterval(() => {
   // Clean expired verifications
   for (const [email, data] of verifiedOTPs.entries()) {
     if (now > data.expiresAt) {
-      verifiedOTPs.delete(email);
+      verifiedOTPs.delete(emailKey);
       console.log(`Cleaned up expired verification for ${email}`);
     }
   }
