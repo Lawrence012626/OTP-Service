@@ -59,8 +59,8 @@ function getRegistrationEmailTemplate(otp) {
         <!-- Content Section -->
         <div style="background: white; padding: 40px 30px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <div style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%); border-radius: 50%; width: 90px; height: 90px; line-height: 90px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);">
-              <i class="fas fa-user-check" style="font-size: 45px; color: white;"></i>
+            <div style="display: inline-block; margin-bottom: 20px;">
+              <img src="https://drive.google.com/uc?export=download&id=19P1A36HJKGUZIPkfJ7TKX6TMU5r8Rrsa" alt="Welcome" style="width: 90px; height: 90px; border-radius: 50%; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);">
             </div>
             <h2 style="color: #1e3a8a; font-size: 28px; font-weight: 700; margin: 0 0 15px;">Welcome to TriVoca!</h2>
             <p style="color: #64748b; font-size: 16px; margin: 0; line-height: 1.6;">
