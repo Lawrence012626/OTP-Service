@@ -126,9 +126,9 @@ function getPasswordResetEmailTemplate(otp) {
           <div style="display: inline-block; background: #FEE2E2; border-radius: 50%; padding: 20px; margin-bottom: 20px;">
             <span style="font-size: 48px;">🔐</span>
           </div>
-          <h2 style="color: #DC2626; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Password Reset Request</h2>
+          <h2 style="color: #DC2626; font-size: 24px; font-weight: 600; margin: 0 0 15px;">Reset Your Password</h2>
           <p style="color: #6B7280; font-size: 16px; margin: 0; line-height: 1.5;">
-            We received a request to reset your password. Use the code below to proceed.
+            Use the verification code below to reset your password and secure your account.
           </p>
         </div>
 
